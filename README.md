@@ -1,4 +1,5 @@
 SRP-Web-Development - Fitness Project
+
 This web application provides personalized workout routines and dietary recommendations based on user input.
 
 Key Features:

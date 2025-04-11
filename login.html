@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Fitness - Sign In</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo" ><a href="main.html"><img src="/assets/SRP-logo.png" alt=""></a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Workouts</a></li>
+            <li><a href="#">Diet Plans</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Login Section -->
+    <div class="login-container">
+        <div class="login-form-container dark-theme">
+            <div class="login-header">
+                <div class="google-logo">
+                    <i class="fab fa-google"></i>
+                </div>
+                <h2>Sign in with Google</h2>
+            </div>
+
+            <div class="app-logo">
+                <img src="images/fitness-logo.png" alt="Your Fitness">
+                <span>Your Fitness</span>
+            </div>
+
+            <h3 class="choose-text">Choose an account</h3>
+            <p class="continue-text">to continue to Your Fitness</p>
+
+            <!-- Account Selection -->
+            <div class="account-selection">
+                <div id="google-accounts-container">
+                    <!-- This will be populated with Google accounts -->
+                    <!-- Example Account -->
+                    <div class="account-option" id="demo-account">
+                        <div class="account-avatar">
+                            <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User">
+                        </div>
+                        <div class="account-info">
+                            <h4>Demo User</h4>
+                            <p>demo.user@example.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="account-action">
+                    <button class="use-another-btn">
+                        <i class="fas fa-user-plus"></i>
+                        Use another account
+                    </button>
+                </div>
+            </div>
+
+            <div class="privacy-notice">
+                Before using this app, you can review Your Fitness's
+                <a href="#">privacy policy</a> and <a href="#">terms of service</a>.
+            </div>
+
+            <!-- Standard Login Form - Hidden by Default -->
+            <div id="manual-login-form" class="hidden">
+                <div id="error-message" class="error-message"></div>
+
+                <form id="login-form" class="login-form" action="php/login_process.php" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-btn primary-btn">Sign In</button>
+
+                    <p class="back-to-google">
+                        <a href="#" id="back-to-google-accounts">Back to Google sign-in</a>
+                    </p>
+                </form>
+            </div>
+
+            <div class="signup-link">
+                <span>Don't have an account?</span>
+                <a href="register.html">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="language-selector">
+            <select id="language">
+                <option value="en">English (United States)</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </div>
+
+        <div class="footer-links">
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+
+    <script>
+        // Demo account click handler
+        document.getElementById('demo-account').addEventListener('click', function () {
+            // Simulate Google sign-in process
+            console.log('Account selected, initiating sign-in process...');
+            // In a real implementation, this would trigger the OAuth flow
+
+            // For demonstration, redirect to dashboard after a brief delay
+            setTimeout(() => {
+                window.location.href = 'dashboard.php';
+            }, 1000);
+        });
+
+        // Use another account button handler
+        document.querySelector('.use-another-btn').addEventListener('click', function () {
+            document.getElementById('manual-login-form').classList.remove('hidden');
+            document.querySelector('.account-selection').classList.add('hidden');
+            document.querySelector('.choose-text').textContent = 'Sign in';
+            document.querySelector('.continue-text').classList.add('hidden');
+        });
+
+        // Back to Google accounts handler
+        document.getElementById('back-to-google-accounts').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('manual-login-form').classList.add('hidden');
+            document.querySelector('.account-selection').classList.remove('hidden');
+            document.querySelector('.choose-text').textContent = 'Choose an account';
+            document.querySelector('.continue-text').classList.remove('hidden');
+        });
+
+        // Initialize Google Sign-In (simplified for demonstration)
+        function onLoad() {
+            // In a real implementation, this would populate the accounts from Google's API
+            console.log('Google Sign-In API loaded');
+        }
+
+        // Handle form submission
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('php/login_process.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect || 'dashboard.php';
+                    } else {
+                        const errorMessage = document.getElementById('error-message');
+                        errorMessage.textContent = data.message || 'Login failed. Please try again.';
+                        errorMessage.classList.add('show');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorMessage = document.getElementById('error-message');
+                    errorMessage.textContent = 'An error occurred. Please try again later.';
+                    errorMessage.classList.add('show');
+                });
+        });
+    </script>
+</body>
+
+</html>

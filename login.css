@@ -75,25 +75,6 @@ body a:hover{
     text-align: center;
 }
 
-.app-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.app-logo img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
-.app-logo span {
-    font-size: 18px;
-    color: var(--dark-text);
-}
-
 .choose-text {
     font-size: 24px;
     margin: 0 0 8px 0;

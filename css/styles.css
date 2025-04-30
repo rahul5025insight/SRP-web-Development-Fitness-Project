@@ -123,7 +123,7 @@ nav{
 
 /* Specific styles for buttons within navigation */
 .btn-nav {
-    background-color: var(--color-bg-default); /* White background */
+    background-color: var(--color-brand-secondary); /* White background */
     color: var(--color-brand-primary); /* Primary color text */
     border: 1px solid var(--color-bg-default); /* White border */
     padding: calc(var(--spacing-xs) - 2px) var(--spacing-sm); /* Slightly smaller padding */
@@ -259,7 +259,7 @@ nav{
 /* --- General Content Section Styling --- */
 .content-section {
     padding: var(--spacing-xl) 0; /* Vertical padding */
-    background-color: var(--color-bg-default); /* Default background color */
+    background-color: var(--color-brand-secondary); /* Default background color */
     text-align: center;
 }
 
@@ -269,14 +269,14 @@ nav{
 
 .section-title {
     font-size: var(--font-size-2xl);
-    color: var(--color-text-default); /* Black color for section titles */
+    color: var(--color-text-on-dark); /* Black color for section titles */
     margin-bottom: var(--spacing-xs);
     font-weight: 600;
 }
 
 .section-subtitle {
     font-size: var(--font-size-md);
-    color: var(--color-text-default); /* Default text color for subtitles */
+    color: var(--color-text-light); /* Default text color for subtitles */
     margin-bottom: var(--spacing-lg);
     max-width: 600px;
     margin-left: auto;

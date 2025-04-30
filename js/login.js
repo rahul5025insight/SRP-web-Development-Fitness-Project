@@ -22,7 +22,7 @@ google_login.addEventListener("click", function(){
             const token = credential.accessToken;
             const user = result.user;
             console.log(user);
-            window.location.href = "../dashboard.html";
+            window.location.href = "../profile-setup.html";
         })
         .catch((error) => {
             const errorCode = error.code;

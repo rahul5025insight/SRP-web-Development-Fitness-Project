@@ -1,0 +1,335 @@
+/* Diet Specific Styles */
+@import url('base.css'); /* Import base styles */
+
+/* --- General Layout Adjustments --- */
+/* Ensure main content has appropriate padding */
+main {
+    padding: var(--spacing-md) 0; /* Add some vertical padding to main content */
+}
+
+/* --- Profile Summary Section --- */
+.user-profile-summary {
+    /* Inherits base card styles via the 'card' class in HTML:
+       background-color, padding, border-radius, box-shadow, color */
+    margin-bottom: var(--spacing-lg); /* Add space below the profile summary */
+    text-align: left; /* Align text left within the card */
+    max-width: 700px; /* Increased max-width for better readability */
+    width: 100%; /* Ensure responsiveness */
+    margin: var(--spacing-lg) auto; /* Center the card and add top/bottom margin */
+}
+
+.user-profile-summary h3 {
+    color: var(--color-brand-primary); /* Use primary brand color for the heading */
+    margin-bottom: var(--spacing-md); /* Space below the heading */
+    font-size: var(--font-size-lg); /* Slightly larger font for the heading */
+    font-weight: 600;
+    text-align: center; /* Center the profile summary heading */
+}
+
+.user-profile-summary p {
+    margin-bottom: var(--spacing-xs); /* Smaller space between profile details */
+    font-size: var(--font-size-md); /* Standard text size */
+    color: var(--color-text-on-dark); /* White text on dark card background */
+}
+
+.user-profile-summary p:last-child {
+    margin-bottom: 0; /* No margin below the last paragraph */
+}
+
+.user-profile-summary strong {
+    color: var(--color-border-default); /* Use a lighter color for the labels (e.g., Light grey) */
+    font-weight: 600; /* Keep bold */
+    display: inline-block; /* Allow setting a min-width */
+    min-width: 100px; /* Increased min-width for better alignment */
+    margin-right: var(--spacing-sm); /* Space between label and value */
+}
+
+
+/* --- Diet Overview (General Section Styling) --- */
+.diet-overview {
+    text-align: center; /* Keep text centered for main overview elements */
+    margin-bottom: var(--spacing-xl);
+}
+
+/* --- Macros Summary --- */
+.macros-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg); /* Add space above the macro cards */
+}
+
+.macro-card {
+    /* Inherits base card styles via the 'card' class in HTML */
+    /* background-color, padding, border-radius, text-align, transition */
+    color: var(--color-text-on-dark); /* White text on dark card */
+    transition: var(--transition); /* Use transition variable */
+}
+
+.macro-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-lg); /* Use larger box shadow variable on hover */
+}
+
+.macro-card h3 {
+    color: var(--color-brand-primary); /* Primary color for headings */
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-md); /* Standard heading size for cards */
+}
+
+.macro-card p {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-border-default); /* Light grey for macro numbers for contrast */
+}
+
+/* --- Meal Plan Section --- */
+.meal-plan {
+    margin-bottom: var(--spacing-xl);
+}
+
+.meal-plan h2 {
+     text-align: center; /* Center the meal plan section title */
+     margin-bottom: var(--spacing-lg); /* Space below the title */
+     color: var(--color-text-default); /* Use default text color */
+     font-size: var(--font-size-xl);
+     font-weight: 600;
+}
+
+.meal-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.meal-card {
+    /* Inherits base card styles via the 'card' class in HTML */
+    /* background-color, border-radius, padding, transition */
+    color: var(--color-text-on-dark); /* White text on dark card */
+    transition: var(--transition); /* Use transition variable */
+}
+
+.meal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-lg); /* Use larger box shadow variable on hover */
+}
+
+.meal-card h3 {
+    color: var(--color-brand-primary); /* Primary color for meal names */
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg); /* Slightly larger font for meal names */
+}
+
+.meal-content {
+    margin-bottom: var(--spacing-md);
+}
+
+.meal-content p {
+     color: var(--color-border-default); /* Light grey for meal description */
+     margin-bottom: var(--spacing-sm);
+     font-size: var(--font-size-md);
+}
+
+.meal-macros {
+    display: flex;
+    justify-content: space-around;
+    margin: var(--spacing-sm) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-border-default); /* Light grey for macro details */
+}
+
+.meal-macros span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meal-macros span strong { /* Target the strong tag within meal macros */
+    color: var(--color-brand-primary); /* Primary color for the macro type (e.g., "Protein") */
+    font-weight: 600;
+}
+
+.log-meal-btn {
+    width: 100%;
+    margin-top: var(--spacing-md);
+}
+
+/* --- Food Log Section --- */
+.meal-log {
+    margin-bottom: var(--spacing-xl);
+}
+
+.meal-log h2 {
+     text-align: center; /* Center the food log section title */
+     margin-bottom: var(--spacing-lg); /* Space below the title */
+     color: var(--color-text-default); /* Use default text color */
+     font-size: var(--font-size-xl);
+     font-weight: 600;
+}
+
+.food-log-container {
+    /* Inherits base card styles via the 'card' class in HTML */
+    /* background-color, padding, border-radius, box-shadow, color */
+    overflow-x: auto; /* Add horizontal scroll for small screens */
+}
+
+#foodLogTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Ensure table is wide enough on small screens */
+}
+
+#foodLogTable th {
+    background-color: var(--color-brand-secondary); /* Secondary color (black) for table headers background */
+    color: var(--color-brand-primary); /* Primary color for table header text */
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-brand-primary); /* Add a stronger border below headers */
+}
+
+#foodLogTable td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border-default); /* Default border color */
+    color: var(--color-border-default); /* Light grey text for table data */
+    font-size: var(--font-size-sm);
+}
+
+#foodLogTable tbody tr:last-child td {
+    border-bottom: none; /* Remove border from the last row in tbody */
+}
+
+#foodLogTable tfoot {
+    font-weight: 600;
+}
+
+#foodLogTable tfoot td {
+    padding-top: var(--spacing-sm);
+    border-top: 2px solid var(--color-border-default); /* Add a border above totals */
+    color: var(--color-text-on-dark); /* White text for totals */
+}
+
+#foodLogTable tfoot td:first-child {
+    text-align: right;
+}
+
+/* --- Navigation Styles (Assuming these are consistent across pages) --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) 0; /* Add padding to nav */
+    margin-bottom: var(--spacing-md); /* Space below nav */
+}
+
+nav .logo img {
+    height: 50px; /* Adjust logo size */
+    width: auto;
+}
+
+.nav-links a {
+    padding: var(--spacing-xs) var(--spacing-sm); /* Add padding to links */
+    text-decoration: none;
+    color: var(--color-text-default); /* Default text color for nav links */
+    font-weight: 500;
+    transition: var(--transition);
+    border-radius: var(--border-radius); /* Add border-radius for hover effect */
+}
+
+.nav-links a:hover {
+    background-color: var(--color-bg-alt); /* Light background on hover */
+    color: var(--color-brand-primary); /* Primary color on hover */
+}
+
+.nav-links a.active {
+    color: var(--color-brand-primary); /* Primary color for active link */
+    font-weight: 600;
+}
+
+.nav-links .btn {
+    margin-left: var(--spacing-sm); /* Space between links and button */
+    /* Inherits base button styles */
+}
+
+
+/* --- Meal Logging Modal --- */
+/* Modal styles are largely inherited from base.css */
+#logMealModal .modal-content {
+    background-color: var(--color-bg-default);
+    color: var(--color-text-default);
+    max-width: 500px;
+}
+
+#logMealForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+#logMealForm .form-group {
+    margin-bottom: 0; /* Remove extra margin from form groups within the modal form */
+}
+
+#logMealForm label {
+    font-size: var(--font-size-sm); /* Slightly smaller labels in modal form */
+}
+
+#logMealForm input[type="text"],
+#logMealForm input[type="number"] {
+    font-size: var(--font-size-md); /* Standard input size */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    .meal-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+     .user-profile-summary {
+        max-width: 100%; /* Allow profile summary to take full width */
+     }
+}
+
+@media (max-width: 600px) {
+    .macros-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .meal-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .meal-macros {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    /* Ensure horizontal scroll for the food log table on small screens */
+    .food-log-container {
+        overflow-x: auto;
+    }
+
+     /* Adjust table cell padding on small screens */
+    #foodLogTable th,
+    #foodLogTable td {
+        padding: var(--spacing-xs);
+        font-size: var(--font-size-xs); /* Smaller font for table data */
+    }
+
+    /* Adjust logo size on small screens */
+    nav .logo img {
+        height: 40px;
+    }
+
+    /* Adjust nav link padding on small screens */
+    .nav-links a {
+         padding: var(--spacing-xs);
+         font-size: var(--font-size-sm);
+    }
+
+     /* Adjust spacing in modal form on small screens */
+    #logMealForm {
+        gap: var(--spacing-sm);
+    }
+}

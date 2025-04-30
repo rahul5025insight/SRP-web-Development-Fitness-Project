@@ -1,0 +1,140 @@
+/* profile-setup.css */
+@import url('base.css');
+/* Import base styles */
+
+/* Basic body styling for background and centering form */
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    margin: 0;
+    padding: var(--spacing-xl) var(--spacing-md);
+    background-color: var(--color-brand-secondary);
+    /* Use alternate background color from base */
+    display: flex;
+    justify-content: center;
+    /* Center form horizontally */
+    align-items: flex-start;
+    /* Align form to the top */
+    min-height: 100vh;
+    box-sizing: border-box;
+    color: var(--color-text-default);
+    /* Use default text color from base */
+}
+
+.profile-form {
+    max-width: 500px;
+    background-color: var(--color-border-default);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Style the form title */
+.form-title {
+    /* Specific class for the h2 */
+    text-align: center;
+    color: var(--color-text-default);
+    /* Use default text color */
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+
+/* Style each group of form element (label + input/select) */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Style labels */
+.form-group label {
+    /* Target labels within form groups */
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--color-text-default);
+    /* Use default text color */
+    font-size: var(--font-size-md);
+}
+
+/* Style text, number inputs, and select elements */
+/* These styles are largely inherited from base.css .form-group input/select */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    /* Inherits padding, border, border-radius, background, color, font-size, transition from base.css */
+    width: 100%;
+    /* Ensure they take full width of their container */
+    box-sizing: border-box;
+}
+
+/* Specific styling for the height and weight input/select group layout */
+.form-group.unit-group .input-with-unit {
+    /* Target the new wrapper div */
+    display: flex;
+    gap: var(--spacing-xs);
+    /* Space between input and select */
+    align-items: center;
+}
+
+.form-group.unit-group .input-with-unit input[type="number"] {
+    flex-grow: 1;
+    /* Allow the number input to take available space */
+    width: auto;
+    /* Override default 100% width */
+}
+
+.form-group.unit-group .input-with-unit select {
+    width: auto;
+    /* Allow unit select to shrink */
+    flex-shrink: 0;
+    /* Prevent unit select from shrinking too much */
+}
+
+/* Style for the gender select dropdown - ensure full width */
+#gender {
+    width: 100%;
+}
+
+/* Style focus state for better usability */
+/* Inherited from base.css .form-group input/select:focus */
+/* .form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-brand-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-brand-primary), 0.25);
+} */
+
+
+/* Style the submit button */
+/* Button styles are applied via the 'btn btn-primary' classes in HTML and inherited from base.css */
+/* button[type="submit"] {
+    display: block;
+    width: 100%;
+    background-color: var(--color-brand-primary);
+    color: var(--color-text-on-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-brand-secondary);
+    color: var(--color-text-on-dark);
+    box-shadow: var(--box-shadow);
+}
+
+button[type="submit"]:active {
+     background-color: color-mix(in srgb, var(--color-brand-secondary) 90%, black);
+     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+} */
+
+/* Ensure placeholder text color is readable */
+::placeholder {
+    color: var(--color-text-light);
+    opacity: 1;
+}

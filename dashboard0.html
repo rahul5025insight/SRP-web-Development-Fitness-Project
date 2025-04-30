@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Fitness Tracker</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="assets/SRP-logo.png" alt="Fitness Tracker Logo">
+                </div>
+                <div class="nav-links">
+                    <a href="dashboard.html" class="active">Dashboard</a>
+                    <a href="diet.html">Diet</a>
+                    <a href="workouts.html">Workouts</a>
+                    <a href="progress.html">Progress</a>
+                    <button id="logoutBtn" class="btn secondary">Logout</button>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="welcome-section">
+                <h1>Welcome, <span id="userName">User</span>!</h1>
+                <p>Here's your personalized fitness overview</p>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-weight"></i>
+                    <h3>Current Weight</h3>
+                    <p id="currentWeight">-- kg</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Target Weight</h3>
+                    <p id="targetWeight">-- kg</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-fire"></i>
+                    <h3>Daily Calories</h3>
+                    <p id="dailyCalories">-- kcal</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Progress</h3>
+                    <p id="progressPercentage">--%</p>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <div class="chart-container">
+                    <h2>Weight Progress</h2>
+                    <canvas id="weightChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h2>Calorie Intake</h2>
+                    <canvas id="calorieChart"></canvas>
+                </div>
+            </section>
+
+            <section class="recommendations">
+                <h2>Today's Recommendations</h2>
+                <div class="recommendation-cards">
+                    <div class="recommendation-card">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Meal Plan</h3>
+                        <p id="mealRecommendation">Loading...</p>
+                        <a href="diet.html" class="btn primary">View Details</a>
+                    </div>
+                    <div class="recommendation-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>Workout</h3>
+                        <p id="workoutRecommendation">Loading...</p>
+                        <a href="workouts.html" class="btn primary">View Details</a>
+                    </div>
+                    <div class="recommendation-card">
+                        <i class="fas fa-tint"></i>
+                        <h3>Hydration</h3>
+                        <p id="hydrationRecommendation">Loading...</p>
+                        <button class="btn primary" id="logWaterBtn">Log Water</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons">
+                    <button class="btn primary" id="logWeightBtn">
+                        <i class="fas fa-weight"></i>
+                        Log Weight
+                    </button>
+                    <button class="btn primary" id="logMealBtn">
+                        <i class="fas fa-utensils"></i>
+                        Log Meal
+                    </button>
+                    <button class="btn primary" id="logWorkoutBtn">
+                        <i class="fas fa-dumbbell"></i>
+                        Log Workout
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for logging weight -->
+    <div id="logWeightModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Log Weight</h2>
+            <form id="logWeightForm">
+                <div class="form-group">
+                    <label for="weightInput">Current Weight (kg)</label>
+                    <input type="number" id="weightInput" step="0.1" required>
+                </div>
+                <button type="submit" class="btn primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

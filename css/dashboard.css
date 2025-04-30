@@ -1,0 +1,195 @@
+/* dashboard.css */
+@import url('base.css');
+
+/* Dashboard Specific Styles */
+
+/* Welcome Section */
+.welcome-section {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    /* Using brand colors for the linear gradient */
+    background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+    color: var(--color-text-on-dark); /* White text on dark background */
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-xl);
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.logo > img{
+    height: 80px;
+    width: auto;
+}
+
+.nav-links > a{
+    padding-right: 10px;
+    text-decoration: none;
+    color: var(--color-text-on-dark); /* White text for nav links */
+}
+.welcome-section h1 {
+    color: var(--color-text-on-dark); /* White color for headline */
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.welcome-section p {
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    font-size: var(--font-size-lg);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+    background-color: var(--color-bg-card); /* Card background color (Black) */
+    color: var(--color-text-on-dark); /* White text on dark card */
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card i {
+    color: var(--color-brand-primary); /* Primary color for icons */
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-card h3 {
+    color: var(--color-text-default); /* Default text color for headings */
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-card p {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-brand-primary); /* Primary color for stats numbers */
+}
+
+/* Charts Section */
+.charts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.chart-container {
+    background-color: var(--color-bg-card); /* Card background color (Black) */
+     color: var(--color-text-on-dark); /* White text on dark card */
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.chart-container h2 {
+    color: var(--color-brand-primary); /* Primary color for chart titles */
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Recommendations Section */
+.recommendations {
+    margin-bottom: var(--spacing-xl);
+}
+
+.recommendation-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.recommendation-card {
+    background-color: var(--color-bg-card); /* Card background color (Black) */
+    color: var(--color-text-on-dark); /* White text on dark card */
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.recommendation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.recommendation-card i {
+    color: var(--color-brand-primary); /* Primary color for icons */
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.recommendation-card h3 {
+    color: var(--color-text-default); /* Default text color for headings */
+    margin-bottom: var(--spacing-sm);
+}
+
+.recommendation-card p {
+    color: var(--color-text-on-dark); /* White text on dark card */
+    margin-bottom: var(--spacing-md);
+}
+
+/* Quick Actions */
+.quick-actions {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.action-buttons .btn {
+    min-width: 200px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+    .charts-section {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendation-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-section h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .welcome-section p {
+        font-size: var(--font-size-md);
+    }
+}

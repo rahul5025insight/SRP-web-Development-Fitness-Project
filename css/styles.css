@@ -38,7 +38,7 @@ html {
     width: 100%;
     overflow: hidden; /* Contains content */
      /* Add padding-top here or on #hero to prevent fixed header overlap */
-    /* padding-top: 80px; /* Example: Adjust based on header height */
+    /* padding-top: 80px; Example: Adjust based on header height */
 }
 
 /* --- Header & Navigation --- */
@@ -259,7 +259,7 @@ nav{
 /* --- General Content Section Styling --- */
 .content-section {
     padding: var(--spacing-xl) 0; /* Vertical padding */
-    background-color: var(--color-bg-default); /* Default background color */
+    background-color: var(--color-brand-secondary); /* Default background color */
     text-align: center;
 }
 
@@ -408,15 +408,6 @@ nav{
     font-size: var(--font-size-sm);
     text-align: end;
 }
-/* .testimonial-card>cite { */
-    /* display: flex; */
-    /* align-items:; */
-    /* gap: var(--spacing-xs); */
-    /* font-style: normal; */
-    /* font-weight: 600; */
-    /* color: var(--color-brand-primary); Primary color for cite text */
-    /* font-size: var(--font-size-sm); */
-/* } */
 
 .testimonial-avatar {
     width: 40px;

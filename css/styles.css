@@ -1,0 +1,547 @@
+/* style.css */
+@import url('base.css');
+
+/* style.css - Specific styles */
+html {
+    scroll-behavior: smooth;
+}
+/* --- Video Background & Overlay --- */
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* width: auto;
+    height: auto; */
+    z-index: -100;
+    object-fit: cover; /* Cover the area */
+    /* Fallback background if video fails */
+    background: url('https://placehold.co/1920x1080/101828/667085?text=Loading+Video...') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg-overlay); /* Overlay color */
+    z-index: -50;
+}
+
+/* --- Layout & Container --- */
+.page-wrapper {
+    position: relative; /* To stack above video/overlay */
+    z-index: 1;
+    width: 100%;
+    overflow: hidden; /* Contains content */
+     /* Add padding-top here or on #hero to prevent fixed header overlap */
+    /* padding-top: 80px; /* Example: Adjust based on header height */
+}
+
+/* --- Header & Navigation --- */
+#main-header {
+    position: fixed; /* Sticky header */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: var(--spacing-sm) 0;
+    background-color: transparent; /* Initially transparent */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#main-header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white on scroll */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+#main-header.scrolled .nav-links a,
+#main-header.scrolled .logo a,
+#main-header.scrolled #mobile-menu-button {
+    color: var(--color-brand-secondary); /* Black text on scrolled header */
+}
+#main-header.scrolled .nav-links a:hover {
+     color: var(--color-brand-primary); /* Primary color on hover when scrolled */
+}
+#main-header.scrolled .btn-nav {
+    background-color: var(--color-brand-primary); /* Primary color background for button on scrolled header */
+    color: var(--color-text-on-primary); /* White text on primary button */
+    border: 1px solid var(--color-brand-primary); /* Primary color border for button */
+}
+#main-header.scrolled .btn-nav:hover {
+    background-color: var(--color-brand-secondary); /* Secondary color (black) on button hover when scrolled */
+}
+
+
+#main-header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 90px; /* Adjust logo size */
+    display: block;
+}
+.logo a { /* Fallback text style */
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text-on-dark); /* White text on the transparent/dark hero background */
+    text-decoration: none;
+}
+nav{
+    height: 50px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links a {
+    color: var(--color-text-on-dark); /* White text on the transparent/dark hero background */
+    text-decoration: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    font-weight: 400;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--color-brand-primary); /* Primary color on hover/active */
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white background on hover/active */
+}
+
+/* Specific styles for buttons within navigation */
+.btn-nav {
+    background-color: var(--color-bg-default); /* White background */
+    color: var(--color-brand-primary); /* Primary color text */
+    border: 1px solid var(--color-bg-default); /* White border */
+    padding: calc(var(--spacing-xs) - 2px) var(--spacing-sm); /* Slightly smaller padding */
+}
+.btn-nav:hover {
+     background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background on hover */
+     color: var(--color-brand-secondary); /* Secondary color (black) text on hover */
+}
+
+
+/* --- Mobile Menu --- */
+#mobile-menu-button {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: var(--color-text-on-dark); /* White color on dark hero background */
+    cursor: pointer;
+    padding: 0;
+}
+#mobile-menu-button svg {
+    display: block; /* Prevents extra space below SVG */
+}
+
+#mobile-menu {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    right: -100%; /* Start off-screen */
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background-color: var(--color-bg-default); /* White background */
+    z-index: 1100;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s ease-in-out;
+    padding: var(--spacing-lg) var(--spacing-md);
+    flex-direction: column;
+}
+
+#mobile-menu.active {
+    display: flex; /* Show when active */
+    right: 0; /* Slide in */
+}
+
+#mobile-close-button {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-md);
+    background: none;
+    border: none;
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-default); /* Default text color for close button */
+    cursor: pointer;
+}
+
+#mobile-menu ul {
+    list-style: none;
+    margin-top: var(--spacing-lg);
+}
+
+#mobile-menu ul li {
+    margin-bottom: var(--spacing-md);
+}
+
+#mobile-menu ul li a {
+    display: block;
+    text-decoration: none;
+    color: var(--color-brand-secondary); /* Black text for menu links */
+    font-size: var(--font-size-md);
+    padding: var(--spacing-xs) 0;
+    transition: color 0.3s ease;
+}
+
+#mobile-menu ul li a:hover {
+    color: var(--color-brand-primary); /* Primary color on hover */
+}
+
+.btn-nav-mobile {
+    display: block;
+    width: 100%;
+    margin-top: var(--spacing-md);
+    background-color: var(--color-brand-primary); /* Primary color background */
+    color: var(--color-text-on-primary); /* White text on primary background */
+    padding: var(--spacing-sm);
+}
+.btn-nav-mobile:hover {
+    /*background-color: var(--color-brand-secondary);*/ /* Secondary color (black) background on hover */
+    color: var(--color-brand-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/* --- Section 1: Hero --- */
+#hero {
+    min-height: 100vh; /* Full viewport height */
+    display: flex;
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    text-align: center;
+    padding: var(--spacing-xl) 0; /* Padding top/bottom */
+    /* Add padding-top to account for fixed header if not added to .page-wrapper */
+    padding-top: calc(var(--spacing-xl) + 80px); /* Example: Adjust 80px to your header height */
+    position: relative; /* For content stacking */
+    color: var(--color-text-on-dark); /* White text for hero section on dark background */
+}
+
+.hero-content {
+    max-width: 800px; /* Limit width of hero text */
+    margin: 0 auto;
+}
+
+.hero-headline {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-text-on-dark); /* White headline on dark background */
+    margin-bottom: var(--spacing-sm);
+    line-height: 1;
+    padding-top: 26vh;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle shadow for readability */
+}
+
+.hero-subheadline {
+    font-size: var(--font-size-lg); /* Larger paragraph text */
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* --- General Content Section Styling --- */
+.content-section {
+    padding: var(--spacing-xl) 0; /* Vertical padding */
+    background-color: var(--color-bg-default); /* Default background color */
+    text-align: center;
+}
+
+.content-section.alt-bg {
+    background-color: var(--color-bg-alt); /* Alternate background color */
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-default); /* Black color for section titles */
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+}
+
+.section-subtitle {
+    font-size: var(--font-size-md);
+    color: var(--color-text-default); /* Default text color for subtitles */
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Section 2: Features --- */
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 equal columns */
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+.feature-card.big {
+    grid-column: span 4;
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-card.small {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+
+#features > .container > img{
+    width: 43vw;
+    height:fit-content;
+}
+#features{
+    /* display: flex; */
+    margin: auto;
+}
+.container {
+    width: 100%;
+    /* max-width: ; Or whatever max size you want */
+    margin: 0 auto;
+    padding: 0 var(--spacing-md); /* Some side padding */
+}
+.feature-card {
+    background-color: var(--color-bg-card); /* Black card background */
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    transition: var(--transition);
+    border: 1px solid var(--color-border-default); /* Default border color */
+    color: var(--color-text-on-dark); /* White text on dark card background */
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-lg);
+}
+
+.feature-icon {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-brand-primary); /* Primary color for icon color */
+}
+
+.feature-card h3 {
+    font-size: var(--font-size-xl);
+    color: var(--color-brand-primary); /* Primary color for feature card headings */
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: var(--color-border-default); /* Light grey text for better contrast on dark card*/
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+}
+
+/* --- Section 3: Testimonials --- */
+#testimonials{
+    background-color: var(--color-brand-secondary);
+}
+#testimonials img{
+    border-radius: var(--border-radius);
+}
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr); /* Default: 1 column */
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.testimonial-card {
+    background-color: var(--color-bg-card); /* Black card background */
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: left; /* Testimonials often look better left-aligned */
+    border-left: 5px solid var(--color-accent-success); /* Success color for accent border */
+    color: var(--color-text-on-dark); /* White text on dark card background */
+}
+
+.testimonial-card blockquote {
+    font-style: italic;
+    color: var(--color-border-default); /* Light grey text for better contrast on dark card */
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    padding-left: var(--spacing-sm); /* Space for quote mark */
+}
+
+.testimonial-card blockquote::before {
+    content: '“'; /* Optional: Add quote marks */
+    position: absolute;
+    left: -5px;
+    top: -10px;
+    font-size: var(--font-size-3xl);
+    color: var(--color-border-default); /* Default border color for quote mark */
+    line-height: 1;
+    z-index: 0;
+}
+
+
+.testimonial-card cite {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-brand-primary); /* Primary color for cite text */
+    font-size: var(--font-size-sm);
+    text-align: end;
+}
+/* .testimonial-card>cite { */
+    /* display: flex; */
+    /* align-items:; */
+    /* gap: var(--spacing-xs); */
+    /* font-style: normal; */
+    /* font-weight: 600; */
+    /* color: var(--color-brand-primary); Primary color for cite text */
+    /* font-size: var(--font-size-sm); */
+/* } */
+
+.testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* --- About Section --- */
+#about {
+    background-color: var(--color-bg-default); /* Default background color */
+}
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr; /* Default: 1 column */
+    gap: var(--spacing-lg);
+    align-items: center;
+    text-align: left;
+}
+
+.about-text .section-title,
+.about-text .section-subtitle { /* Override centered text */
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+.about-text p {
+    text-align: left; /* Override centered text */
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-default); /* Default text color */
+}
+.about-text .btn {
+    margin-top: var(--spacing-sm);
+}
+.about-vid > #about-video{
+    width: 50vw;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    height: auto;
+    display: block;
+    width: 100%;
+}
+
+
+/* --- Footer --- */
+#main-footer {
+    background-color: var(--color-brand-secondary); /* Black color for dark footer */
+    color: rgba(255, 255, 255, 0.7); /* Light text color */
+    padding: var(--spacing-md) 0;
+    text-align: center;
+    font-size: var(--font-size-sm);
+}
+
+#main-footer a {
+    color: rgba(255, 255, 255, 0.9); /* Slightly lighter white for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#main-footer a:hover {
+    color: var(--color-brand-primary); /* Primary color on hover */
+}
+
+
+/* --- Responsive Design --- */
+
+/* Medium devices (tablets, landscape phones) */
+@media (min-width: 768px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+    .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    }
+     .about-content {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
+    }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+     .testimonial-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
+    nav{
+        justify-content: space-between;
+    }
+    .logo img{
+        height: 70px;
+        width: auto;
+    }
+    .nav-links {
+        display: none; /* Hide desktop nav */
+    }
+    #mobile-menu-button {
+        display: block; /* Show hamburger */
+    }
+    .hero-headline {
+        font-size: var(--font-size-2xl);
+    }
+    .hero-subheadline {
+        font-size: var(--font-size-md);
+    }
+    .content-section {
+        padding: var(--spacing-lg) 0;
+    }
+    .about-image {
+        order: -1; /* Show image above text on mobile */
+        margin-bottom: var(--spacing-md);
+    }
+    .about-text {
+        text-align: center; /* Center text on mobile */
+    }
+     .about-text .section-title,
+    .about-text .section-subtitle,
+    .about-text p {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

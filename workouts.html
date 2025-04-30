@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts - Fitness Tracker</title>
+    <link rel="stylesheet" href="css/workouts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="assets/SRP-logo.png" alt="Fitness Tracker Logo">
+                </div>
+                <div class="nav-links">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="diet.html">Diet</a>
+                    <a href="workouts.html" class="active">Workouts</a>
+                    <a href="progress.html">Progress</a>
+                    <button id="logoutBtn" class="btn secondary">Logout</button>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="workout-overview">
+                <h1>Your Workout Plan</h1>
+                <div class="workout-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Workout Days</h3>
+                        <p id="workoutDays">-- days/week</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Duration</h3>
+                        <p id="workoutDuration">-- minutes</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire"></i>
+                        <h3>Calories Burned</h3>
+                        <p id="caloriesBurned">-- kcal</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="workout-schedule">
+                <h2>Weekly Schedule</h2>
+                <div class="schedule-grid">
+                    <div class="day-card" id="monday">
+                        <h3>Monday</h3>
+                        <div class="workout-content">
+                            <p id="mondayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="monday">Log Workout</button>
+                        </div>
+                    </div>
+                    <div class="day-card" id="tuesday">
+                        <h3>Tuesday</h3>
+                        <div class="workout-content">
+                            <p id="tuesdayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="tuesday">Log Workout</button>
+                        </div>
+                    </div>
+                    <div class="day-card" id="wednesday">
+                        <h3>Wednesday</h3>
+                        <div class="workout-content">
+                            <p id="wednesdayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="wednesday">Log Workout</button>
+                        </div>
+                    </div>
+                    <div class="day-card" id="thursday">
+                        <h3>Thursday</h3>
+                        <div class="workout-content">
+                            <p id="thursdayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="thursday">Log Workout</button>
+                        </div>
+                    </div>
+                    <div class="day-card" id="friday">
+                        <h3>Friday</h3>
+                        <div class="workout-content">
+                            <p id="fridayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="friday">Log Workout</button>
+                        </div>
+                    </div>
+                    <div class="day-card" id="saturday">
+                        <h3>Saturday</h3>
+                        <div class="workout-content">
+                            <p id="saturdayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="saturday">Log Workout</button>
+                        </div>
+                    </div>
+                    <div class="day-card" id="sunday">
+                        <h3>Sunday</h3>
+                        <div class="workout-content">
+                            <p id="sundayWorkout">Loading...</p>
+                            <button class="btn primary log-workout-btn" data-day="sunday">Log Workout</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="exercise-library">
+                <h2>Exercise Library</h2>
+                <div class="exercise-filters">
+                    <button class="btn secondary filter-btn active" data-filter="all">All</button>
+                    <button class="btn secondary filter-btn" data-filter="strength">Strength</button>
+                    <button class="btn secondary filter-btn" data-filter="cardio">Cardio</button>
+                    <button class="btn secondary filter-btn" data-filter="flexibility">Flexibility</button>
+                </div>
+                <div class="exercise-grid" id="exerciseGrid">
+                    <!-- Exercise cards will be added here -->
+                </div>
+            </section>
+
+            <section class="workout-log">
+                <h2>Workout History</h2>
+                <div class="workout-log-container">
+                    <table id="workoutLogTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Workout</th>
+                                <th>Duration</th>
+                                <th>Calories</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="workoutLogBody">
+                            <!-- Workout log entries will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Workout Logging Modal -->
+    <div id="logWorkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Log Workout</h2>
+            <form id="logWorkoutForm">
+                <input type="hidden" id="workoutDay" name="workoutDay">
+                <div class="form-group">
+                    <label for="workoutType">Workout Type</label>
+                    <select id="workoutType" required>
+                        <option value="">Select Workout Type</option>
+                        <option value="strength">Strength Training</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="hiit">HIIT</option>
+                        <option value="yoga">Yoga</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (minutes)</label>
+                    <input type="number" id="duration" required>
+                </div>
+                <div class="form-group">
+                    <label for="calories">Calories Burned</label>
+                    <input type="number" id="calories" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn primary">Log Workout</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/workouts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

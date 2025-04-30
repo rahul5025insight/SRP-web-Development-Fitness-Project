@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitAI - Personalized Fitness & Diet Plans</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/base.css">
+
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+</head>
+<body>
+
+    <video id="background-video" autoplay muted loop preload="metadata">
+        <source src="assets/original-f02f108d1ce0d737da0c3bae6ef25e26.mp4" type="video/mp4" >
+        <!-- <source src="/assets/shadow.mp4" type="video/mp4" > -->
+        Your browser does not support the video tag.
+        </video>
+
+    <div class="overlay"></div>
+
+    <div class="page-wrapper">
+
+        <header id="main-header">
+            <div class="container">
+                <nav>
+                    <div class="logo">
+                        <a href="index.html"><img src="assets/srp-logo.png" alt="FitAI Logo"></a>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#" class="btn btn-nav">Sign Up</a></li>
+                    </ul>
+                    <button id="mobile-menu-button" aria-label="Open Menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                </nav>
+            </div>
+        </header>
+        <div id="mobile-menu">
+            <button id="mobile-close-button" aria-label="Close Menu">&times;</button>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Echos</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#" class="btn btn-nav-mobile">Sign Up</a></li>
+            </ul>
+        </div>
+        
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-headline">Your AI-Powered Fitness Journey Starts Here</h1>
+                    <p class="hero-subheadline">Get intelligent workout & diet recommendations tailored precisely to you.</p>
+                    <!-- <a href="#signup" class="btn btn-primary btn-large">Get Started Today</a> -->
+                    <a href="#" class="btn btn-nav">Sign Up</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="features" class="content-section">
+            <div class="container">
+                <h2 class="section-title">Unlock Your Potential</h2>
+                <p class="section-subtitle">Leverage AI to achieve your fitness goals faster and smarter.</p>
+                <img class="features-img" src="/assets/dates.png" alt="">
+                <div class="features-grid">
+                    <a href="/workouts.html">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6M18 7l-1.4 1.4M6 17l-1.4 1.4M21 16l-1.4-1.4M3 8l-1.4-1.4M12 22v-4M12 6V2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M17 12h4M3 12h4M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></svg>
+                        </div>
+                        <h3>Personalized Workouts</h3>
+                        <p>AI crafts dynamic training plans that adapt to your progress and feedback.</p>
+                    </div></a>
+                    <a href="/diet.html">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z"/></svg>
+                        </div>
+                        <h3>Custom Diet Plans</h3>
+                        <p>Receive meal suggestions and macro tracking based on your goals and dietary needs.</p>
+                    </div></a>
+                    <a href="/dashboard.html">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 9 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+                        </div>
+                        <h3>Intelligent Tracking</h3>
+                        <p>Monitor your progress effortlessly with smart analytics and visual reports.</p>
+                    </div></a>
+                </div>
+            </div>
+        </section>
+        
+
+        <section id="testimonials" class="content-section alt-bg">
+            <div class="container">
+                <h2 class="section-title">Echoes of Strength</h2>
+                <p class="section-subtitle">See how FitAI is transforming lives.</p>
+                <div class="testimonial-grid">
+                    <!-- <img src="/assets/gym.webp" alt=""> -->
+                    <div class="testimonial-card">
+                        <blockquote>
+                            "The impediment to action advances action. What stands in the way becomes the way."
+                        </blockquote>
+                        <cite>
+                            <div>Marcus Aurelius </div>
+                        </cite>
+                    </div>
+                    <div class="testimonial-card">
+                        <blockquote>
+                            "A man’s health can be judged by which he takes two at a time—stairs or pills."
+                        </blockquote>
+                         <cite>
+                            <div>— Joan Welsh</div>
+                        </cite>
+                    </div>
+                     <div class="testimonial-card">
+                        <blockquote>
+                            "You have power over your mind — not outside events. Realize this, and you will find strength."
+                        </blockquote>
+                         <cite>
+                            <div>— Marcus Aureliu</div>
+                        </cite>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+             <div class="container about-content">
+                 <div class="about-text">
+                    <h2 class="section-title">About FitAI</h2>
+                    <p>We believe that everyone deserves a personalized path to fitness. FitAI combines cutting-edge artificial intelligence with exercise science and nutrition principles to create truly bespoke fitness and diet plans. Our mission is to empower you to reach your health goals through smart, adaptive, and motivating technology.</p>
+                    <!-- <a href="#learn-more" class="btn btn-secondary">Learn More</a> -->
+                    <a href="#" class="btn btn-nav-mobile">Sign Up</a>
+                 </div>
+                 <div class="about-vid">
+                    <video id="about-video" muted autoplay loop>
+                        <source src="/assets/about-vid.mp4" type="video/mp4">Video cannot support your browser.
+                    </video>
+                 </div>
+             </div>
+        </section>
+
+        <footer id="main-footer">
+            <div class="container">
+                <p>&copy; 2025 FitAI. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                </div>
+        </footer>
+
+    </div> <script>
+        const menuButton = document.getElementById('mobile-menu-button');
+        const closeButton = document.getElementById('mobile-close-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = mobileMenu.querySelectorAll('a'); // Get all links in mobile menu
+
+        if (menuButton && mobileMenu && closeButton) {
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+
+            closeButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+
+            // Add event listener to each link to close menu on click
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                     mobileMenu.classList.remove('active');
+                });
+            });
+        }
+    </script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

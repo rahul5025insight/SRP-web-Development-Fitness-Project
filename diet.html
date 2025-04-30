@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Plan - Fitness Tracker</title>
+    <!-- Link to your base.css and diet.css -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/diet.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Supabase JS (keep if you are using it for other features) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="assets/srp-logo.png" alt="Fitness Tracker Logo">
+                </div>
+                <div class="nav-links">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="workouts.html">Workouts</a>
+                    <a href="progress.html">Progress</a>
+                    <button id="logoutBtn" class="btn secondary">Logout</button>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="diet-overview">
+                <h1 id="dietPlanTitle">Your Personalized Diet Plan</h1>
+                <!-- Section to display user profile information -->
+                <div class="user-profile-summary card"> <!-- Using card class for styling -->
+                    <h3>Profile Summary</h3>
+                    <p><strong>Name:</strong> <span id="profileName">--</span></p>
+                    <p><strong>Age:</strong> <span id="profileAge">--</span></p>
+                    <p><strong>Gender:</strong> <span id="profileGender">--</span></p>
+                    <p><strong>Height:</strong> <span id="profileHeight">--</span></p>
+                    <p><strong>Weight:</strong> <span id="profileWeight">--</span></p>
+                </div>
+
+                <div class="macros-summary">
+                    <div class="macro-card">
+                        <h3>Daily Calories</h3>
+                        <p id="dailyCalories">-- kcal</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Protein</h3>
+                        <p id="proteinTarget">-- g</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Carbs</h3>
+                        <p id="carbsTarget">-- g</p>
+                    </div>
+                    <div class="macro-card">
+                        <h3>Fats</h3>
+                        <p id="fatsTarget">-- g</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="meal-plan">
+                <h2>Today's Meal Plan</h2>
+                <div class="meal-cards">
+                    <div class="meal-card">
+                        <h3>Breakfast</h3>
+                        <div class="meal-content">
+                            <p id="breakfastMeal">Loading...</p>
+                            <div class="meal-macros">
+                                <span>Calories: <span id="breakfastCalories">--</span></span>
+                                <span>Protein: <span id="breakfastProtein">--</span>g</span>
+                            </div>
+                        </div>
+                        <button class="btn primary log-meal-btn" data-meal="breakfast">Log Meal</button>
+                    </div>
+
+                    <div class="meal-card">
+                        <h3>Lunch</h3>
+                        <div class="meal-content">
+                            <p id="lunchMeal">Loading...</p>
+                            <div class="meal-macros">
+                                <span>Calories: <span id="lunchCalories">--</span></span>
+                                <span>Protein: <span id="lunchProtein">--</span>g</span>
+                            </div>
+                        </div>
+                        <button class="btn primary log-meal-btn" data-meal="lunch">Log Meal</button>
+                    </div>
+
+                    <div class="meal-card">
+                        <h3>Dinner</h3>
+                        <div class="meal-content">
+                            <p id="dinnerMeal">Loading...</p>
+                            <div class="meal-macros">
+                                <span>Calories: <span id="dinnerCalories">--</span></span>
+                                <span>Protein: <span id="dinnerProtein">--</span>g</span>
+                            </div>
+                        </div>
+                        <button class="btn primary log-meal-btn" data-meal="dinner">Log Meal</button>
+                    </div>
+                    <br>
+                    <div class="meal-card">
+                        <h3>Snacks</h3>
+                        <div class="meal-content">
+                            <p id="snacksMeal">Loading...</p>
+                            <div class="meal-macros">
+                                <span>Calories: <span id="snacksCalories">--</span></span>
+                                <span>Protein: <span id="snacksProtein">--</span>g</span>
+                            </div>
+                        </div>
+                        <button class="btn primary log-meal-btn" data-meal="snacks">Log Meal</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="meal-log">
+                <h2>Today's Food Log</h2>
+                <div class="food-log-container card"> <!-- Added card class for food log container -->
+                    <table id="foodLogTable" class="data-table"> <!-- Added data-table class -->
+                        <thead>
+                            <tr>
+                                <th>Meal</th>
+                                <th>Food</th>
+                                <th>Calories</th>
+                                <th>Protein</th>
+                                <th>Carbs</th>
+                                <th>Fats</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="foodLogBody">
+                            <!-- Food log entries will be added here -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">Total</td>
+                                <td id="totalCalories">0</td>
+                                <td id="totalProtein">0</td>
+                                <td id="totalCarbs">0</td>
+                                <td id="totalFats">0</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Meal Logging Modal -->
+    <div id="logMealModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Log Meal</h2>
+            <form id="logMealForm">
+                <input type="hidden" id="mealType" name="mealType">
+                <div class="form-group">
+                    <label for="foodName">Food Name</label>
+                    <input type="text" id="foodName" required>
+                </div>
+                <div class="form-group">
+                    <label for="calories">Calories</label>
+                    <input type="number" id="calories" required>
+                </div>
+                <div class="form-group">
+                    <label for="protein">Protein (g)</label>
+                    <input type="number" id="protein" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="carbs">Carbs (g)</label>
+                    <input type="number" id="carbs" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="fats">Fats (g)</label>
+                    <input type="number" id="fats" step="0.1" required>
+                </div>
+                <button type="submit" class="btn primary">Add to Log</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Link to your diet.js and main.js -->
+    <script src="js/diet.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

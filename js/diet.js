@@ -1,12 +1,3 @@
-// Initialize Supabase (Keep if you are using it for other features like food logging)
-// Replace with your actual Supabase URL and Key if you are using Supabase
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_KEY';
-// Check if the placeholders are still there before creating the client
-const supabase = (supabaseUrl !== 'YOUR_SUPABASE_URL' && supabaseKey !== 'YOUR_SUPABASE_KEY')
-    ? supabase.createClient(supabaseUrl, supabaseKey)
-    : null; // Set to null if not configured
-
 // DOM Elements for Macro Summary (Keep)
 const dailyCaloriesElement = document.getElementById('dailyCalories');
 const proteinTargetElement = document.getElementById('proteinTarget');
@@ -30,6 +21,40 @@ const totalCarbsElement = document.getElementById('totalCarbs');
 const totalFatsElement = document.getElementById('totalFats');
 const logoutBtn = document.getElementById('logoutBtn'); // Keep if you have logout functionality
 
+
+function calculateAndDisplayMacros(profile) {
+    // 1. Convert weight to kg
+    let weightKg = parseFloat(profile.weight);
+    if (profile.weightUnit === 'lbs') weightKg *= 0.453592;
+
+    // 2. Convert height to cm
+    let heightCm = parseFloat(profile.height);
+    if (profile.heightUnit === 'inches') heightCm *= 2.54;
+    else if (profile.heightUnit === 'feet') heightCm *= 30.48;
+
+    const age = parseInt(profile.age, 10);
+    const s = profile.gender.toLowerCase() === 'male' ? 5 : -161;
+
+    // 3. BMR & maintenance
+    const BMR = 10 * weightKg + 6.25 * heightCm - 5 * age + s;
+    const activityMap = { '0': 1.4, '1': 1.6, '2': 1.7, '3': 1.8, '4': 2 };
+    const actFactor = activityMap[profile.activity] || 1.5;
+    const maintenance = BMR * actFactor;
+
+    // 4. Macro ratios (start balanced 40/30/30)
+    const carbRatio = 0.4, protRatio = 0.3, fatRatio = 0.3;
+    const cal = Math.round(maintenance);
+    const carbsG = Math.round(carbRatio * cal / 4);
+    const protG = Math.round(protRatio * cal / 4);
+    const fatG = Math.round(fatRatio * cal / 9);
+
+    // 5. Update the DOM
+    dailyCaloriesElement.textContent = `${cal} kcal`;
+    carbsTargetElement.textContent = `${carbsG} g`;
+    proteinTargetElement.textContent = `${protG} g`;
+    fatsTargetElement.textContent = `${fatG} g`;
+}
+
 // --- Function to Load and Display Profile Data from localStorage ---
 function loadAndDisplayProfile() {
     console.log("Attempting to load profile data from localStorage...");
@@ -48,37 +73,37 @@ function loadAndDisplayProfile() {
                 profileNameElement.textContent = profileData.name;
                 console.log("Updated profileNameElement with:", profileData.name);
             } else {
-                 console.warn("Profile name element not found or data missing.");
+                console.warn("Profile name element not found or data missing.");
             }
 
             if (profileAgeElement && profileData.age) {
                 profileAgeElement.textContent = profileData.age;
-                 console.log("Updated profileAgeElement with:", profileData.age);
+                console.log("Updated profileAgeElement with:", profileData.age);
             } else {
-                 console.warn("Profile age element not found or data missing.");
+                console.warn("Profile age element not found or data missing.");
             }
 
             if (profileGenderElement && profileData.gender) {
-                 // Capitalize the first letter for display
+                // Capitalize the first letter for display
                 const displayGender = profileData.gender.charAt(0).toUpperCase() + profileData.gender.slice(1);
                 profileGenderElement.textContent = displayGender;
-                 console.log("Updated profileGenderElement with:", displayGender);
+                console.log("Updated profileGenderElement with:", displayGender);
             } else {
-                 console.warn("Profile gender element not found or data missing.");
+                console.warn("Profile gender element not found or data missing.");
             }
 
             if (profileHeightElement && profileData.height && profileData.heightUnit) {
                 profileHeightElement.textContent = `${profileData.height} ${profileData.heightUnit}`;
-                 console.log("Updated profileHeightElement with:", `${profileData.height} ${profileData.heightUnit}`);
+                console.log("Updated profileHeightElement with:", `${profileData.height} ${profileData.heightUnit}`);
             } else {
-                 console.warn("Profile height element not found or data missing.");
+                console.warn("Profile height element not found or data missing.");
             }
 
             if (profileWeightElement && profileData.weight && profileData.weightUnit) {
                 profileWeightElement.textContent = `${profileData.weight} ${profileData.weightUnit}`;
-                 console.log("Updated profileWeightElement with:", `${profileData.weight} ${profileData.weightUnit}`);
+                console.log("Updated profileWeightElement with:", `${profileData.weight} ${profileData.weightUnit}`);
             } else {
-                 console.warn("Profile weight element not found or data missing.");
+                console.warn("Profile weight element not found or data missing.");
             }
 
             // You could potentially use this profileData to calculate initial macro targets
@@ -103,15 +128,17 @@ function loadAndDisplayProfile() {
         // window.location.href = 'profile-setup.html';
     }
 }
+// After loadAndDisplayProfile(), in diet.js…
+
 
 // --- Existing Functions (Keep if needed for other features) ---
 
 // Initialize Diet Page (Modified to call loadAndDisplayProfile)
 async function initDietPage() {
-    console.log("Initializing Diet Page...");
-    // Load and display profile data from localStorage first
     loadAndDisplayProfile();
-
+    const profile = JSON.parse(localStorage.getItem('userProfile'));
+    if (profile) calculateAndDisplayMacros(profile);
+  
     // You can keep your Supabase authentication and data fetching logic here
     // if you are using it for other features like fetching meal plans or food logs.
     // Example:
@@ -182,9 +209,9 @@ if (logMealModal) {
     // Assuming logMealForm and close button exist within the modal
     const closeButton = logMealModal.querySelector('.close'); // Use querySelector for robustness
     if (closeButton) {
-         closeButton.addEventListener('click', () => {
-             logMealModal.style.display = 'none';
-         });
+        closeButton.addEventListener('click', () => {
+            logMealModal.style.display = 'none';
+        });
     }
 
     // Close modal when clicking outside
@@ -207,3 +234,5 @@ if (logMealModal) {
 
 // Initialize diet page when loaded
 document.addEventListener('DOMContentLoaded', initDietPage);
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

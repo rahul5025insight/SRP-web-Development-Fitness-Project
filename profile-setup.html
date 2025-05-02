@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,19 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/profile-setup.css">
 </head>
+
 <body>
-    <form action="dashboard.html" method="post" id="profileForm" class="profile-form card"> <h2 class="form-title">Enter Details to Get Recommendations</h2> <div class="form-group">
+    <form action="dashboard.html" method="post" id="profileForm" class="profile-form card">
+        <h2 class="form-title">Enter Details to Get Recommendations</h2>
+        <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your Name" required> </div>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+        </div>
 
         <div class="form-group">
             <label for="age">Age:</label>
-            <input type="number" id="age" name="age" min="1" max="120" placeholder="e.g., 30" required> </div>
+            <input type="number" id="age" name="age" min="1" max="120" placeholder="e.g., 30" required>
+        </div>
 
         <div class="form-group">
             <label for="gender">Gender:</label>
@@ -27,9 +33,23 @@
             </select>
         </div>
 
+        <!-- In profile-setup.html, inside the <form> -->
+        <div class="form-group unit-group">
+            <label for="weight">Weight:</label>
+            <div class="input-with-unit">
+                <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
+                <select id="weight_unit" name="weight_unit" required>
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                </select>
+            </div>
+        </div>
+
+
         <div class="form-group unit-group">
             <label for="height">Height:</label>
-            <div class="input-with-unit"> <input type="number" id="height" name="height" step="0.1" min="1" required placeholder="e.g., 175">
+            <div class="input-with-unit"> <input type="number" id="height" name="height" step="0.1" min="1" required
+                    placeholder="e.g., 175">
                 <select id="height_unit" name="height_unit">
                     <option value="cm">cm</option>
                     <option value="inches">inches</option>
@@ -39,21 +59,61 @@
         </div>
 
         <div class="form-group unit-group">
-            <label for="weight">Weight:</label>
-            <div class="input-with-unit"> <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
-                <select id="weight_unit" name="weight_unit">
-                    <option value="kg">kg</option>
-                    <option value="lbs">lbs</option>
-                </select>
+            <label for="activity">Activity level:</label>
+            <div class="input-with-unit">
+                <!-- <input type="number" id="weight" name="weight" step="0.1" min="1" required
+                placeholder="e.g., 3"> -->
+                <input type="radio" name="activity" value="0" /> 0<br />
+                <input type="radio" name="activity" value="1" checked /> 1-2<br />
+                <input type="radio" name="activity" value="2" /> 3-5<br />
+                <input type="radio" name="activity" value="3" /> 6-7<br />
+                <input type="radio" name="activity" value="4" /> 2x days/week <br />
+            </div>
+        </div>
+        <!-- <span1>Activity level</span1> -->
+
+        <div class="form-group unit-group">
+            <label for="macros">Macro ratios:</label>
+            <div class="input-with-unit">
+                <input type="radio" name="ratios" value="0" checked onclick="set_ratio(40,30,30);" /> Balanced<br />
+                <input type="radio" name="ratios" value="1" onclick="set_ratio(20,40,40);" /> Low Carb<br />
+                <input type="radio" name="ratios" value="2" onclick="set_ratio(50,30,20);" /> High Carb<br />
+                <input type="radio" name="ratios" value="3" /> Custom <br />
+
+                <input type="text" size="2" maxlength="2" id="carbratio" /> % Carbs <br />
+                <input type="text" size="2" maxlength="2" id="proteinratio" /> % Proteins <br />
+                <input type="text" size="2" maxlength="2" id="fatratio" /> % Fats <br />
+            </div>
+        </div>
+        <!-- <span1>Macro ratios</span1> -->
+
+        <div class="form-group unit-group">
+            <label for="dieting-type">Dieting type:</label>
+            <div class="input-with-unit">
+                <input type="radio" name="diettype" value="0" checked /> Lose
+                <input type="radio" name="diettype" value="1" /> Maintain
+                <input type="radio" name="diettype" value="2" /> Gain <br />
             </div>
         </div>
 
+        <!-- <span>Dieting type</span> -->
+
+        <div class="form-group unit-group">
+            <label for="dieting-type">Deficit/surplus:</label>
+            <div class="input-with-unit">
+                <input type="radio" name="diettype" value="0" checked /> Lose
+                <input type="radio" name="diettype" value="1" /> Maintain
+                <input type="radio" name="diettype" value="2" /> Gain <br />
+            </div>
+        </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Get Recommendations</button> </div>
+            <button type="submit" class="btn btn-primary">Get Recommendations</button>
+        </div>
 
     </form>
 
     <script src="js/profile-setup.js"></script>
 
 </body>
+
 </html>

@@ -1,10 +1,36 @@
 /* Workouts Specific Styles */
 @import url('base.css');
-
+body{
+    background-color: var(--color-brand-secondary);
+    color: var(--color-text-on-dark);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav > .logo > img{
+    height: 80px;
+    width: auto;
+}
+.nav-links{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+.nav-links :hover{
+    color: var(--color-text-default);
+}
 /* Workout Overview */
 .workout-overview {
+    margin-top: 30px;
     text-align: center;
     margin-bottom: var(--spacing-xl);
+    background-color: var(--color-text-light);
 }
 
 .workout-stats {
@@ -47,6 +73,7 @@
 /* Weekly Schedule */
 .workout-schedule {
     margin-bottom: var(--spacing-xl);
+    background-color: var(--color-text-light);
 }
 
 .schedule-grid {
@@ -60,6 +87,7 @@
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
     transition: var(--transition);
+    padding: 30px;
 }
 
 .day-card:hover {
@@ -84,6 +112,7 @@
 /* Exercise Library */
 .exercise-library {
     margin-bottom: var(--spacing-xl);
+    background-color: var(--color-text-light);
 }
 
 .exercise-filters {
@@ -149,6 +178,7 @@
 /* Workout Log */
 .workout-log {
     margin-bottom: var(--spacing-xl);
+    background-color: var(--color-text-light);
 }
 
 .workout-log-container {
@@ -178,6 +208,7 @@
 /* Workout Logging Modal */
 #logWorkoutModal .modal-content {
     max-width: 500px;
+    background-color: var(--color-text-light);
 }
 
 #logWorkoutForm {

@@ -31,4 +31,8 @@ profileForm.addEventListener('submit', function(event) {
     // data will also be visible in the URL (less ideal for large/sensitive data).
     // If you must use POST without a backend, you'd prevent default, save data, and
     // then manually navigate: window.location.href = 'dashboard.html';
+    event.preventDefault();             // stop the form actually posting
+    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    window.location.href = 'diet.html';  // or directly 'diet.html'
 });
+// at the bottom of your submit handler in profile-setup.js

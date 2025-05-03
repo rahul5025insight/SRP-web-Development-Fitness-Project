@@ -105,19 +105,6 @@ function loadAndDisplayProfile() {
             } else {
                 console.warn("Profile weight element not found or data missing.");
             }
-
-            // You could potentially use this profileData to calculate initial macro targets
-            // if you don't rely on a backend/Supabase profile for that.
-            // Example (basic BMR calculation - replace with a more accurate one if needed):
-            // const isMale = profileData.gender === 'male';
-            // const weightKg = (profileData.weightUnit === 'lbs') ? parseFloat(profileData.weight) * 0.453592 : parseFloat(profileData.weight);
-            // const heightCm = (profileData.heightUnit === 'inches') ? parseFloat(profileData.height) * 2.54 : (profileData.heightUnit === 'feet') ? parseFloat(profileData.height) * 30.48 : parseFloat(profileData.height);
-            // const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * parseInt(profileData.age)) + (isMale ? 5 : -161);
-            // if (dailyCaloriesElement) {
-            //     dailyCaloriesElement.textContent = `${Math.round(bmr * 1.375)} kcal`; // Example: sedentary activity level
-            // }
-
-
         } catch (error) {
             console.error('Error parsing profile data from localStorage:', error);
             // Handle potential errors with localStorage data
@@ -125,20 +112,18 @@ function loadAndDisplayProfile() {
     } else {
         console.log('No profile data found in localStorage. User may need to complete profile setup.');
         // Optionally redirect to profile setup page
-        // window.location.href = 'profile-setup.html';
+        window.location.href = 'profile-setup.html';
     }
 }
-// After loadAndDisplayProfile(), in diet.js…
-
 
 // --- Existing Functions (Keep if needed for other features) ---
 
 // Initialize Diet Page (Modified to call loadAndDisplayProfile)
 async function initDietPage() {
+    console.log("Initializing Diet Page...");
+    // Load and display profile data from localStorage first
     loadAndDisplayProfile();
-    const profile = JSON.parse(localStorage.getItem('userProfile'));
-    if (profile) calculateAndDisplayMacros(profile);
-  
+
     // You can keep your Supabase authentication and data fetching logic here
     // if you are using it for other features like fetching meal plans or food logs.
     // Example:
@@ -198,20 +183,45 @@ async function initDietPage() {
 
 // Event Listeners (Keep if needed for modal, logging, logout)
 // Ensure elements exist before adding listeners
-if (logMealModal) {
-    document.querySelectorAll('.log-meal-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            document.getElementById('mealType').value = button.dataset.meal;
-            logMealModal.style.display = 'block';
+
+
+document.addEventListener('DOMContentLoaded', initDietPage);
+// -----------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------
+async function initDietPage() {
+    loadAndDisplayProfile();
+    const profile = JSON.parse(localStorage.getItem('userProfile'));
+    if (profile) calculateAndDisplayMacros(profile);
+
+    // …then your existing Supabase or logging logic
+}
+
+// ↓↓↓ START: Meal‑Log Functionality ↓↓↓
+document.addEventListener('DOMContentLoaded', () => {
+    const logButtons = document.querySelectorAll('.log-meal-btn');
+    const modal = document.getElementById('mealModal');
+    const closeBtn = document.getElementById('closeModal');
+    const mealForm = document.getElementById('mealForm');
+    const logList = document.getElementById('logList');
+    const totalCalEl = document.getElementById('totalCalories');
+
+    
+    let meals = [];
+
+    // 1. Open modal
+    logButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('mealType').value = btn.dataset.meal;
+            modal.classList.remove('hidden');
         });
     });
 
     // Assuming logMealForm and close button exist within the modal
     const closeButton = logMealModal.querySelector('.close'); // Use querySelector for robustness
     if (closeButton) {
-        closeButton.addEventListener('click', () => {
-            logMealModal.style.display = 'none';
-        });
+         closeButton.addEventListener('click', () => {
+             logMealModal.style.display = 'none';
+         });
     }
 
     // Close modal when clicking outside
@@ -220,10 +230,13 @@ if (logMealModal) {
             logMealModal.style.display = 'none';
         }
     });
-} else {
-    console.warn("Log meal modal element not found.");
-}
+});
 
+// 2. Close modal
+closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+window.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.add('hidden');
+});
 
 // logMealForm.addEventListener('submit', async (e) => { ... }); // Keep if logging
 
@@ -233,6 +246,4 @@ if (logMealModal) {
 
 
 // Initialize diet page when loaded
-document.addEventListener('DOMContentLoaded', initDietPage);
-
-// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', initDietPage); 

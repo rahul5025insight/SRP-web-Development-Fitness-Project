@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <!-- Supabase JS (keep if you are using it for other features) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -40,7 +42,21 @@
                     <p><strong>Height:</strong> <span id="profileHeight">--</span></p>
                     <p><strong>Weight:</strong> <span id="profileWeight">--</span></p>
                 </div>
+                <div id="dietPlan">Loading your plan…</div>
 
+                <!-- somewhere under <body>… -->
+                <section id="diet-summary">
+                    <p><strong>Daily Calories:</strong> <span id="dailyCalories">–</span></p>
+                    <p><strong>Carbs (%):</strong> <span id="carbsTarget">–</span></p>
+                    <p><strong>Proteins (%):</strong> <span id="proteinTarget">–</span></p>
+                    <p><strong>Fats (%):</strong> <span id="fatsTarget">–</span></p>
+                </section>
+
+                <!-- …your meal‑plan template… -->
+                <!-- link your script last -->
+
+
+                <!-- 
                 <div class="macros-summary">
                     <div class="macro-card">
                         <h3>Daily Calories</h3>
@@ -58,8 +74,8 @@
                         <h3>Fats</h3>
                         <p id="fatsTarget">-- g</p>
                     </div>
-                </div>
-            </section>
+                </div> -->
+            <!-- </section>
 
             <section class="meal-plan">
                 <h2>Today's Meal Plan</h2>
@@ -72,8 +88,12 @@
                                 <span>Calories: <span id="breakfastCalories">--</span></span>
                                 <span>Protein: <span id="breakfastProtein">--</span>g</span>
                             </div>
-                        </div>
-                        <button class="btn primary log-meal-btn" data-meal="breakfast">Log Meal</button>
+                        </div> -->
+                        <!-- <button class="btn primary log-meal-btn" data-meal="breakfast">Log Meal</button> -->
+                        <!-- <li>
+                            Breakfast - Example Meal
+                            <button class="log-meal-btn" data-meal="Breakfast">Log Meal</button>
+                        </li>
                     </div>
 
                     <div class="meal-card">
@@ -84,8 +104,12 @@
                                 <span>Calories: <span id="lunchCalories">--</span></span>
                                 <span>Protein: <span id="lunchProtein">--</span>g</span>
                             </div>
-                        </div>
-                        <button class="btn primary log-meal-btn" data-meal="lunch">Log Meal</button>
+                        </div> -->
+                        <!-- <button class="btn primary log-meal-btn" data-meal="lunch">Log Meal</button> -->
+                        <!-- <li>
+                            Lunch - Example Meal
+                            <button class="log-meal-btn" data-meal="Lunch">Log Meal</button>
+                        </li>
                     </div>
 
                     <div class="meal-card">
@@ -96,8 +120,12 @@
                                 <span>Calories: <span id="dinnerCalories">--</span></span>
                                 <span>Protein: <span id="dinnerProtein">--</span>g</span>
                             </div>
-                        </div>
-                        <button class="btn primary log-meal-btn" data-meal="dinner">Log Meal</button>
+                        </div> -->
+                        <!-- <button class="btn primary log-meal-btn" data-meal="dinner">Log Meal</button> -->
+                        <!-- <li>
+                            Dinner - Example Meal
+                            <button class="log-meal-btn" data-meal="Dinner">Log Meal</button>
+                        </li>
                     </div>
                     <br>
                     <div class="meal-card">
@@ -108,51 +136,71 @@
                                 <span>Calories: <span id="snacksCalories">--</span></span>
                                 <span>Protein: <span id="snacksProtein">--</span>g</span>
                             </div>
-                        </div>
-                        <button class="btn primary log-meal-btn" data-meal="snacks">Log Meal</button>
+                        </div> -->
+                        <!-- <button class="btn primary log-meal-btn" data-meal="snacks">Log Meal</button> -->
+                    <!-- <li>
+                        Snacks - Example Meal
+                        <button class="log-meal-btn" data-meal="Snacks">Log Meal</button>
+                    </li>
                     </div>
                 </div>
-            </section>
+            </section> -->
 
-            <section class="meal-log">
+            <!-- ↓↓↓ START: Today's Log Food Section (insert here) ↓↓↓ -->
+            <!-- <section id="logSection" class="meal-log">
                 <h2>Today's Food Log</h2>
-                <div class="food-log-container card"> <!-- Added card class for food log container -->
-                    <table id="foodLogTable" class="data-table"> <!-- Added data-table class -->
-                        <thead>
-                            <tr>
-                                <th>Meal</th>
-                                <th>Food</th>
-                                <th>Calories</th>
-                                <th>Protein</th>
-                                <th>Carbs</th>
-                                <th>Fats</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="foodLogBody">
-                            <!-- Food log entries will be added here -->
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="2">Total</td>
-                                <td id="totalCalories">0</td>
-                                <td id="totalProtein">0</td>
-                                <td id="totalCarbs">0</td>
-                                <td id="totalFats">0</td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <div id="logSummary">
+                    Total Calories: <span id="totalCalories">0</span> kcal
                 </div>
-            </section>
-        </main>
-    </div>
+                <div id="logList" class="log-list"> -->
+                    <!-- JS will inject each logged meal here -->
+                <!-- </div>
+            </section> -->
+            <!-- <section class="food-log">
+                <h2>Today's Food Log</h2>
+                <div id="totalCalories">Total Calories: 0</div>
+                <ul id="foodLogBody">
+                    </ul>
+            </section> -->
+            <!-- ↓↓↓ START: Meal‑Logging Modal (insert right after the above) ↓↓↓ -->
+            <!-- <div id="mealModal" class="modal hidden">
+                <div class="modal-content">
+                    <span id="closeModal" class="close-btn">&times;</span>
+                    <h3>Log Your Meal</h3>
+                    <form id="mealForm">
+                        <input type="hidden" id="mealType" name="mealType" />
+                        <!-- optional: track Breakfast/Lunch/etc -->
+                        <!-- <div class="form-group">
+                            <label for="foodName">Food Name</label>     
+                            <input type="text" id="foodName" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" id="quantity" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="calories">Calories</label>
+                            <input type="number" id="calories" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="portion">Portion Size</label>
+                            <input type="text" id="portion" required />
+                        </div>
+                        <button type="submit" class="btn primary">Add Meal</button>
+                    </form>
+                </div> -->
+            <!--</div> -->
+            <!-- ↑↑↑ END: Modal and Log Section ↑↑↑ -->
 
+
+ 
+
+            
     <!-- Meal Logging Modal -->
-    <div id="logMealModal" class="modal">
+    <!-- <div id="logMealModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Log Meal</h2>
+            <span class="close">&times;</span> -->
+            <!-- <h2>Log Meal</h2>
             <form id="logMealForm">
                 <input type="hidden" id="mealType" name="mealType">
                 <div class="form-group">
@@ -180,10 +228,25 @@
         </div>
     </div>
 
-    
-
-    <!-- Link to your diet.js and main.js -->
+    <script src="js/nutrition.js"></script><!-- Link to your diet.js and main.js -->
     <script src="js/diet.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const raw = localStorage.getItem('userProfile');
+            if (!raw) {
+                return document.getElementById('dietPlan')
+                    .innerText = 'No profile found. Please set up your profile first.';
+            }
+            const profile = JSON.parse(raw);
+            const plan = NutritionAndFitness.generateDietPlan(profile);
+            document.getElementById('dietPlan').innerHTML = `
+            <h2>Your Personalized Diet</h2>
+            <ul>
+              ${plan.map(i => `<li>${i.time}: ${i.meal}</li>`).join('')}
+            </ul>`;
+        });
+    </script>
 </body>
+
 </html>

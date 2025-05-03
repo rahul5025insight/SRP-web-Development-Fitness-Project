@@ -10,9 +10,7 @@
 </head>
 
 <body>
-    <form action="dashboard.html" method="post" id="profileForm" class="profile-form card">
-        <h2 class="form-title">Enter Details to Get Recommendations</h2>
-        <div class="form-group">
+    <form action="dashboard.html" method="post" id="profileForm" class="profile-form card"> <h2 class="form-title">Enter Details to Get Recommendations</h2> <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
         </div>
@@ -58,16 +56,25 @@
             </div>
         </div>
 
+        <!-- In profile-setup.html, inside the <form> -->
         <div class="form-group unit-group">
-            <label for="activity">Activity level:</label>
+            <label for="weight">Weight:</label>
+            <div class="input-with-unit"> <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
+                <select id="weight_unit" name="weight_unit">
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group unit-group" id="activityGroup">
+            <label>Activity level (sessions/week):</label>
             <div class="input-with-unit">
-                <!-- <input type="number" id="weight" name="weight" step="0.1" min="1" required
-                placeholder="e.g., 3"> -->
-                <input type="radio" name="activity" value="0" /> 0<br />
-                <input type="radio" name="activity" value="1" checked /> 1-2<br />
-                <input type="radio" name="activity" value="2" /> 3-5<br />
-                <input type="radio" name="activity" value="3" /> 6-7<br />
-                <input type="radio" name="activity" value="4" /> 2x days/week <br />
+                <input type="radio" name="activity" value="0" /> 1<br />
+                <input type="radio" name="activity" value="1" checked /> 2<br />
+                <input type="radio" name="activity" value="2" /> 4<br />
+                <input type="radio" name="activity" value="3" /> 6<br />
+                <input type="radio" name="activity" value="4" /> 7<br />
             </div>
         </div>
         <!-- <span1>Activity level</span1> -->
@@ -78,15 +85,16 @@
                 <input type="radio" name="ratios" value="0" checked onclick="set_ratio(40,30,30);" /> Balanced<br />
                 <input type="radio" name="ratios" value="1" onclick="set_ratio(20,40,40);" /> Low Carb<br />
                 <input type="radio" name="ratios" value="2" onclick="set_ratio(50,30,20);" /> High Carb<br />
-                <input type="radio" name="ratios" value="3" /> Custom <br />
-
-                <input type="text" size="2" maxlength="2" id="carbratio" /> % Carbs <br />
-                <input type="text" size="2" maxlength="2" id="proteinratio" /> % Proteins <br />
-                <input type="text" size="2" maxlength="2" id="fatratio" /> % Fats <br />
+                <div>
+                    <input type="text" size="2" maxlength="2" id="carbratio" /> % Carbs <br />
+                    <input type="text" size="2" maxlength="2" id="proteinratio" /> % Proteins <br />
+                    <input type="text" size="2" maxlength="2" id="fatratio" /> % Fats <br />
+                </div>
             </div>
         </div>
         <!-- <span1>Macro ratios</span1> -->
 
+        
         <div class="form-group unit-group">
             <label for="dieting-type">Dieting type:</label>
             <div class="input-with-unit">
@@ -95,6 +103,8 @@
                 <input type="radio" name="diettype" value="2" /> Gain <br />
             </div>
         </div>
+
+        <!-- <span>Dieting type</span> -->
 
         <!-- <span>Dieting type</span> -->
 
@@ -111,7 +121,7 @@
         </div>
 
     </form>
-
+    <script src="js/nutrition.js"></script>
     <script src="js/profile-setup.js"></script>
 
 </body>

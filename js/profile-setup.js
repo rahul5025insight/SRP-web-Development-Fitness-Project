@@ -1,7 +1,54 @@
 
-const profileForm = document.getElementById('profileForm');
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+  
+    const profileData = {
+      name:       document.getElementById('name').value,
+      age:        document.getElementById('age').value,
+      gender:     document.getElementById('gender').value,
+      height:     document.getElementById('height').value,
+      heightUnit: document.getElementById('height_unit').value,
+      weight:     document.getElementById('weight').value,
+      weightUnit: document.getElementById('weight_unit').value,
+      activity:   document.querySelector('input[name="activity"]:checked').value,
+      macros: {
+        carbs:   document.getElementById('carbratio').value,
+        protein: document.getElementById('proteinratio').value,
+        fat:     document.getElementById('fatratio').value
+      },
+      dietGoal:  document.querySelector('input[name="diettype"]:checked').value  // lose/maintain/gain
+    };
+  
+    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    window.location.href = 'diet.html';
+  });
+  
+// const profileForm = document.getElementById('profileForm');
+// document.getElementById('profileForm')
+//   .addEventListener('submit', function(event) {
+//    // if you have a vanilla submit, remove it or comment it out
+//    event.preventDefault();  // ⬅️ stop the browser from posting
 
-profileForm.addEventListener('submit', function(event) {
+//     const profileData = {
+//       name:  document.getElementById('name').value,
+//       age:   document.getElementById('age').value,
+//       gender: document.getElementById('gender').value,
+//       height: document.getElementById('height').value,
+//       heightUnit: document.getElementById('height_unit').value,
+//       weight: document.getElementById('weight').value,
+//      weightUnit: document.getElementById('weight_unit').value,
+//       activity: document.getElementById('activity').value
+//       // …any other fields…
+//     };
+
+//     // save it:
+//     localStorage.setItem('userProfile', JSON.stringify(profileData));
+
+//    // then jump to diet page (or a dashboard)
+//     window.location.href = 'diet.html';
+// });
+
+profileForm.addEventListener('submit', function (event) {
     // Get form data
     const name = document.getElementById('name').value;
     const age = document.getElementById('age').value;
@@ -22,6 +69,7 @@ profileForm.addEventListener('submit', function(event) {
         weightUnit: weightUnit
     };
 
+    
     // Save data to localStorage
     localStorage.setItem('userProfile', JSON.stringify(profileData));
 
@@ -34,5 +82,10 @@ profileForm.addEventListener('submit', function(event) {
     event.preventDefault();             // stop the form actually posting
     localStorage.setItem('userProfile', JSON.stringify(profileData));
     window.location.href = 'diet.html';  // or directly 'diet.html'
+    // at the bottom of your submit handler in profile-setup.js
+    event.preventDefault();             // stop the form actually posting
+    localStorage.setItem('userProfile', JSON.stringify(profileData));
+    window.location.href = 'diet.html';  // or directly 'diet.html'
+
 });
 // at the bottom of your submit handler in profile-setup.js

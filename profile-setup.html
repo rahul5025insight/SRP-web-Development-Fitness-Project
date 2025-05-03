@@ -10,10 +10,7 @@
 </head>
 
 <body>
-    <!-- action="dashboard.html" method="post" -->
-    <form id="profileForm" class="profile-form card">
-        <h2 class="form-title">Enter Details to Get Recommendations</h2>
-        <div class="form-group">
+    <form action="dashboard.html" method="post" id="profileForm" class="profile-form card"> <h2 class="form-title">Enter Details to Get Recommendations</h2> <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
         </div>
@@ -34,6 +31,19 @@
             </select>
         </div>
 
+        <!-- In profile-setup.html, inside the <form> -->
+        <div class="form-group unit-group">
+            <label for="weight">Weight:</label>
+            <div class="input-with-unit">
+                <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
+                <select id="weight_unit" name="weight_unit" required>
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                </select>
+            </div>
+        </div>
+
+
         <div class="form-group unit-group">
             <label for="height">Height:</label>
             <div class="input-with-unit"> <input type="number" id="height" name="height" step="0.1" min="1" required
@@ -49,9 +59,8 @@
         <!-- In profile-setup.html, inside the <form> -->
         <div class="form-group unit-group">
             <label for="weight">Weight:</label>
-            <div class="input-with-unit">
-                <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
-                <select id="weight_unit" name="weight_unit" required>
+            <div class="input-with-unit"> <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
+                <select id="weight_unit" name="weight_unit">
                     <option value="kg">kg</option>
                     <option value="lbs">lbs</option>
                 </select>
@@ -96,6 +105,16 @@
 
         <!-- <span>Dieting type</span> -->
 
+        <!-- <span>Dieting type</span> -->
+
+        <div class="form-group unit-group">
+            <label for="dieting-type">Deficit/surplus:</label>
+            <div class="input-with-unit">
+                <input type="radio" name="diettype" value="0" checked /> Lose
+                <input type="radio" name="diettype" value="1" /> Maintain
+                <input type="radio" name="diettype" value="2" /> Gain <br />
+            </div>
+        </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Get Recommendations</button>
         </div>

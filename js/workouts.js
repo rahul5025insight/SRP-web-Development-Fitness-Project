@@ -1,8 +1,39 @@
-// Initialize Supabase
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseKey = 'YOUR_SUPABASE_KEY';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+// 1. Read profile
+function loadProfileForWorkouts() {
+    const raw = localStorage.getItem('userProfile');
+    return raw ? JSON.parse(raw) : null;
+}
 
+// 2. Build a plan
+function generateWorkoutPlan(profile) {
+    const dayMap = { '0': 1, '1': 2, '2': 4, '3': 6, '4': 7 };
+    const durMap = { '0': 15, '1': 30, '2': 45, '3': 60, '4': 75 };
+    const days = dayMap[profile.activity] || 3;
+    const duration = durMap[profile.activity] || 30;
+    const caloriesPerSession = duration * 5; // approx.
+
+    workoutDays.textContent = `${days} days/week`;
+    workoutDuration.textContent = `${duration} minutes`;
+    caloriesBurned.textContent = `${caloriesPerSession} kcal`;
+
+    // fill weekly schedule
+    const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    daysOfWeek.forEach((day, i) => {
+        const el = document.getElementById(`${day}Workout`);
+        el.textContent = i < days
+            ? (i % 2 === 0 ? 'Strength training' : 'Cardio')
+            : 'Rest day';
+    });
+}
+
+// 3. Call them in your init
+async function initWorkoutsPage() {
+    const profile = loadProfileForWorkouts();
+    if (profile) generateWorkoutPlan(profile);
+
+    // …then your existing Supabase code (or comment that out until ready)
+}
+document.addEventListener('DOMContentLoaded', initWorkoutsPage);
 // DOM Elements
 const workoutDays = document.getElementById('workoutDays');
 const workoutDuration = document.getElementById('workoutDuration');

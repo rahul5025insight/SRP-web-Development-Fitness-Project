@@ -17,7 +17,7 @@ body {
     /* Align form to the top */
     min-height: 100vh;
     box-sizing: border-box;
-    color: var(--color-text-default);
+    color: var(--color-brand-secondary);
     /* Use default text color from base */
 }
 
@@ -69,10 +69,10 @@ body {
 /* Specific styling for the height and weight input/select group layout */
 .form-group.unit-group .input-with-unit {
     /* Target the new wrapper div */
-    display: flex;
+    /* display: flex; */
     gap: var(--spacing-xs);
     /* Space between input and select */
-    align-items: center;
+    /* align-items: center; */
 }
 
 .form-group.unit-group .input-with-unit input[type="number"] {

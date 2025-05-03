@@ -245,4 +245,4 @@ window.addEventListener('click', e => {
 
 
 // Initialize diet page when loaded
-document.addEventListener('DOMContentLoaded', initDietPage);
+document.addEventListener('DOMContentLoaded', initDietPage); 

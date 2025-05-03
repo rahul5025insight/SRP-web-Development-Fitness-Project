@@ -69,6 +69,7 @@ profileForm.addEventListener('submit', function (event) {
         weightUnit: weightUnit
     };
 
+    
     // Save data to localStorage
     localStorage.setItem('userProfile', JSON.stringify(profileData));
 

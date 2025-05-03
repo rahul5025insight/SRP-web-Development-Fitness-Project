@@ -44,6 +44,7 @@ const logWorkoutModal = document.getElementById('logWorkoutModal');
 const logWorkoutForm = document.getElementById('logWorkoutForm');
 const workoutDayInput = document.getElementById('workoutDay');
 
+
 // Exercise Library Data
 const exercises = {
     strength: [

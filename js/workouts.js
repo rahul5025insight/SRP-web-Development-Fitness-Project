@@ -35,6 +35,65 @@ const exercises = {
     ]
 };
 
+// 1. Read profile
+function loadProfileForWorkouts() {
+    const raw = localStorage.getItem('userProfile');
+    return raw ? JSON.parse(raw) : null;
+}
+function generateWorkoutPlan(profile) {
+    // map activity → days & duration
+    const dayMap = { '0':1, '1':2, '2':4, '3':6, '4':7 };
+    const durMap = { '0':15,'1':30,'2':45,'3':60,'4':75 };
+    const days   = dayMap[profile.activity] || 3;
+    const duration = durMap[profile.activity] || 30;
+    const caloriesBurned = duration * 5;  // ~5kcal/min
+  
+    // write summary
+    document.getElementById('workoutDays').textContent     = `${days} days/week`;
+    document.getElementById('workoutDuration').textContent = `${duration} minutes`;
+    document.getElementById('caloriesBurned').textContent  = `${caloriesBurned} kcal`;
+  
+    // fill each day
+    const daysOfWeek = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+    daysOfWeek.forEach((day, i) => {
+        const el = document.getElementById(`${day}Workout`);
+        el.textContent = i < days
+        ? (i % 2 === 0 ? 'Strength training' : 'Cardio')
+        : 'Rest day';
+    });
+}
+// 3. Call them in your init
+async function initWorkoutsPage() {
+    const profile = loadProfileForWorkouts();
+    if (profile) generateWorkoutPlan(profile);
+
+    // …then your existing Supabase code (or comment that out until ready)
+}
+document.addEventListener('DOMContentLoaded', initWorkoutsPage);
+// // 2. Build a plan
+// function generateWorkoutPlan(profile) {
+//     const dayMap = { '0': 1, '1': 2, '2': 4, '3': 6, '4': 7 };
+//     const durMap = { '0': 15, '1': 30, '2': 45, '3': 60, '4': 75 };
+//     const days = dayMap[profile.activity] || 3;
+//     const duration = durMap[profile.activity] || 30;
+//     const caloriesPerSession = duration * 5; // approx.
+
+//     workoutDays.textContent = `${days} days/week`;
+//     workoutDuration.textContent = `${duration} minutes`;
+//     caloriesBurned.textContent = `${caloriesPerSession} kcal`;
+
+//     // fill weekly schedule
+//     const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+//     daysOfWeek.forEach((day, i) => {
+//         const el = document.getElementById(`${day}Workout`);
+//         el.textContent = i < days
+//             ? (i % 2 === 0 ? 'Strength training' : 'Cardio')
+//             : 'Rest day';
+//     });
+// }
+
+
+
 // Initialize the workouts page
 async function initWorkoutsPage() {
     try {
@@ -128,7 +187,7 @@ async function loadWorkoutHistory() {
 // Update workout log table
 function updateWorkoutLogTable(workouts) {
     workoutLogBody.innerHTML = '';
-    
+
     workouts.forEach(workout => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -158,7 +217,7 @@ function updateWorkoutLogTable(workouts) {
 // Load exercise library
 function loadExerciseLibrary() {
     exerciseGrid.innerHTML = '';
-    
+
     Object.entries(exercises).forEach(([category, categoryExercises]) => {
         categoryExercises.forEach(exercise => {
             const card = document.createElement('div');
@@ -249,7 +308,7 @@ function addEventListeners() {
             const filter = button.dataset.filter;
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-            
+
             document.querySelectorAll('.exercise-card').forEach(card => {
                 if (filter === 'all' || card.dataset.category === filter) {
                     card.style.display = 'block';

@@ -20,34 +20,12 @@
                     <a href="diet.html">Diet</a>
                     <a href="workouts.html" class="active">Workouts</a>
                     <a href="progress.html">Progress</a>
-                    <button id="logoutBtn" class="btn secondary"><a href="index.html">Logout</a></button>
+                    <button id="logoutBtn" class="btn secondary">Logout</button>
                 </div>
             </nav>
         </header>
 
         <main>
-            <!-- ------------------------------------------------------------------------------------------ -->
-            <h1>Your Personalized Workout Plan</h1>
-            <section id="workout-summary">
-              <p><strong>Workout Frequency:</strong> <span id="workoutDays">–</span></p>
-              <p><strong>Session Duration:</strong> <span id="workoutDuration">–</span></p>
-              <p><strong>Calories per Session:</strong> <span id="caloriesBurned">–</span></p>
-            </section>
-          
-            <section id="weekly-schedule">
-              <h2>Weekly Schedule</h2>
-              <ul>
-                <li>Monday:    <span id="mondayWorkout">–</span></li>
-                <li>Tuesday:   <span id="tuesdayWorkout">–</span></li>
-                <li>Wednesday: <span id="wednesdayWorkout">–</span></li>
-                <li>Thursday:  <span id="thursdayWorkout">–</span></li>
-                <li>Friday:    <span id="fridayWorkout">–</span></li>
-                <li>Saturday:  <span id="saturdayWorkout">–</span></li>
-                <li>Sunday:    <span id="sundayWorkout">–</span></li>
-              </ul>
-            </section>
-            <!-- ------------------------------------------------------------------------------------------ -->
-              
             <section class="workout-overview">
                 <h1>Your Workout Plan</h1>
                 <div class="workout-stats">
@@ -68,21 +46,7 @@
                     </div>
                 </div>
             </section>
-            <!-- ------------------------------------------------------------------------------------------ -->
-            <!-- <section id="weekly-schedule">
-                <h2>Weekly Schedule</h2>
-                <ul>
-                    <li>Monday:    <span id="mondayWorkout">–</span></li>
-                    <li>Tuesday:   <span id="tuesdayWorkout">–</span></li>
-                    <li>Wednesday: <span id="wednesdayWorkout">–</span></li>
-                    <li>Thursday:  <span id="thursdayWorkout">–</span></li>
-                    <li>Friday:    <span id="fridayWorkout">–</span></li>
-                    <li>Saturday:  <span id="saturdayWorkout">–</span></li>
-                    <li>Sunday:    <span id="sundayWorkout">–</span></li>
-                </ul>
-            </section> -->
-            <!-- ------------------------------------------------------------------------------------------ -->
-              
+
             <section class="workout-schedule">
                 <h2>Weekly Schedule</h2>
                 <div class="schedule-grid">
@@ -147,8 +111,7 @@
                     <button class="btn secondary filter-btn" data-filter="flexibility">Flexibility</button>
                 </div>
                 <div class="exercise-grid" id="exerciseGrid">
-                    <!-- Exercise cards will be added here -->
-                </div>
+                    </div>
             </section>
 
             <section class="workout-log" style="border-radius: 8px; padding: 30px;">
@@ -166,15 +129,13 @@
                             </tr>
                         </thead>
                         <tbody id="workoutLogBody">
-                            <!-- Workout log entries will be added here -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Workout Logging Modal -->
     <div id="logWorkoutModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -189,15 +150,15 @@
                         <option value="cardio">Cardio</option>
                         <option value="hiit">HIIT</option>
                         <option value="yoga">Yoga</option>
-                    </select>
+                        </select>
                 </div>
                 <div class="form-group">
                     <label for="duration">Duration (minutes)</label>
-                    <input type="number" id="duration" required>
+                    <input type="number" id="duration" required min="1">
                 </div>
                 <div class="form-group">
                     <label for="calories">Calories Burned</label>
-                    <input type="number" id="calories" required>
+                    <input type="number" id="calories" required min="0">
                 </div>
                 <div class="form-group">
                     <label for="notes">Notes</label>
@@ -208,9 +169,8 @@
         </div>
     </div>
 
-    
     <script src="js/nutrition.js"></script>
     <script src="js/workouts.js"></script>
     <script src="js/main.js"></script>
 </body>
-</html> 
+</html>

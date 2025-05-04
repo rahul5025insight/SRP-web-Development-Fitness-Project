@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logList = document.getElementById('logList');
     const totalCalEl = document.getElementById('totalCalories');
 
+    
     let meals = [];
 
     // 1. Open modal

@@ -1,25 +1,75 @@
-// Note: This version generates workout recommendations locally based on user profile data
-// stored in localStorage. It also handles workout logging and history using localStorage
-// if Supabase is not configured.
+document.addEventListener('DOMContentLoaded', initWorkoutsPage);
+window.addEventListener('storage', e => {
+    if (e.key === 'userProfile') initWorkoutsPage();
+});
 
-// Initialize Supabase client (only needed if you still want to use it for something else)
-// ** IMPORTANT: Replace with your actual Supabase URL and anon key if you use it **
-// If you don't need Supabase at all, you can remove this entire block.
-const supabaseUrl = 'YOUR_SUPABASE_URL'; // e.g., 'https://abcdefg.supabase.co'
-const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY'; // e.g., 'eyJhbGciOiJIUzI1Ni...'
+const API_KEY = '5fHApZiU8h9hc8wzsAT8cg==sUw8ZX4abzNlCLIO';
 
-// Check if Supabase details are provided before creating the client
-let supabase = null;
-if (supabaseUrl && supabaseAnonKey && supabaseUrl !== 'YOUR_SUPABASE_URL') {
+const difficultyMap = {
+    beginner: 'beginner',
+    intermediate: 'intermediate',
+    advanced: 'expert'
+};
+const defaultDurations = {
+    beginner: 10,
+    intermediate: 18,
+    expert: 30
+};
+async function fetchRecommendations(profile) {
+    const container = document.getElementById('recommendations');
+    container.innerHTML = '<p>Loading…</p>';
+    console.debug('fetchRecommendations got profile:', profile);
+
     try {
-        supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
-        console.log("Supabase client initialized.");
-    } catch (e) {
-        console.error("Error initializing Supabase client:", e);
-        supabase = null; // Ensure supabase is null if initialization fails
+
+        const types = (profile.preferences?.length
+            ? profile.preferences.join(',')
+            : 'strength');      // default to strength
+        const diff = difficultyMap[profile.fitnessLevel]
+            || 'beginner';
+        console.debug('→ Using difficulty param:', diff)
+        const url = `https://api.api-ninjas.com/v1/exercises?type=${types}&difficulty=${diff}`;
+
+        console.log('➡️ Fetching workouts:', url);
+        const res = await fetch(url, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'X-Api-Key': API_KEY,
+                'Accept': 'application/json'
+            }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const list = await res.json();
+
+        renderRecommendations(list);
+    } catch (err) {
+        console.error('API error:', err);
+        container.innerText = 'Unable to load recommendations. Check console.';
     }
-} else {
-    console.warn("Supabase URL or Anon Key not set. Workout logging and history will use localStorage.");
+}
+function renderRecommendations(list) {
+    const container = document.getElementById('recommendations');
+    container.innerHTML = '';
+    if (!list.length) {
+        container.innerText = 'No workouts found for your profile.';
+        return;
+    }
+    list.forEach(w => {
+        const raw = w.description || w.instructions || '';
+        const desc = typeof raw === 'string'
+            ? raw.replace(/<[^>]+>/g, '')
+            : 'No description.';
+        const card = document.createElement('div');
+        card.className = 'workout-card';
+        const dur = w.duration || defaultDurations[w.difficulty] || '—';
+        card.innerHTML = `
+                   <h3>${w.name}</h3>
+                   <p>${desc}</p>
+                   <small>Duration: ${dur} min</small>
+                 `;
+        container.appendChild(card);
+    });
 }
 
 
@@ -60,50 +110,25 @@ const exercises = {
 // Initialize the workouts page - This function runs when the page loads
 async function initWorkoutsPage() {
     // If using Supabase Auth for login, keep this check:
-    if (supabase) {
-        const { data: { user } = {} } = await supabase.auth.getUser(); // Use default empty object
-        if (!user) {
-            window.location.href = 'index.html'; // Redirect to login if not logged in
-            return;
-        }
-    } else {
-         // If not using Supabase, check for profile data in localStorage
-         const profile = loadProfileForWorkouts();
-         if (!profile) {
-             console.warn("Profile data not found in localStorage. Recommendations may be inaccurate or unavailable.");
-             // Optionally redirect to profile setup page if profile is essential
-             // window.location.href = 'profile-setup.html';
-             // return;
-         }
-    }
-
     try {
-        // Load profile data from localStorage
         const userProfile = loadProfileForWorkouts();
-
+        console.log('Loaded userProfile:', userProfile);
         if (userProfile) {
-            // Generate and display workout plan based on profile
             generateWorkoutPlan(userProfile);
+            document.getElementById('recommendations').innerHTML = '<p>Loading…</p>';
+            await fetchRecommendations(userProfile);
+
         } else {
-            // Display default or a message if profile not found
             displayDefaultWorkoutPlan();
-            console.warn("User profile not found in localStorage. Displaying default workout plan.");
+            document.getElementById('recommendations').innerText =
+                'Please complete your profile first.';
         }
-
-        // Load and display workout history (uses localStorage or Supabase)
-        await loadWorkoutHistory();
-
-        // Load and display exercise library (hardcoded)
+        await loadWorkoutHistory();      // keep history if you like
         loadExerciseLibrary();
-
-        // Add event listeners for interactive elements
         addEventListeners();
-
     } catch (error) {
-        // Log any errors during initialization
-        console.error('Error initializing workouts page:', error);
-        // Show an error message to the user
-        showError('Failed to load workout data. Please try again.');
+        console.error('Init error:', error);
+        showError('Failed to load workouts.');
     }
 }
 
@@ -157,7 +182,7 @@ function generateWorkoutPlan(profile) {
             if (i < daysPerWeek) {
                 // Assign a workout type, cycling through the workoutTypes array
                 workoutContentElement.textContent = workoutTypes[workoutTypeIndex % workoutTypes.length];
-                 workoutTypeIndex++; // Move to the next workout type for the next workout day
+                workoutTypeIndex++; // Move to the next workout type for the next workout day
             } else {
                 workoutContentElement.textContent = 'Rest day'; // Assign rest day
             }
@@ -167,55 +192,23 @@ function generateWorkoutPlan(profile) {
 
 // Display a default workout plan if profile is not available
 function displayDefaultWorkoutPlan() {
-     if (workoutDaysElement) workoutDaysElement.textContent = '-- days/week';
-     if (workoutDurationElement) workoutDurationElement.textContent = '-- minutes';
-     if (caloriesBurnedElement) caloriesBurnedElement.textContent = '-- kcal';
+    if (workoutDaysElement) workoutDaysElement.textContent = '-- days/week';
+    if (workoutDurationElement) workoutDurationElement.textContent = '-- minutes';
+    if (caloriesBurnedElement) caloriesBurnedElement.textContent = '-- kcal';
 
-     const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-     daysOfWeek.forEach(day => {
-         const workoutContentElement = document.getElementById(`${day}Workout`);
-         if (workoutContentElement) {
-             workoutContentElement.textContent = 'Plan not available';
-         }
-     });
-}
-
-// --- Workout Logging and History Functions (using localStorage or Supabase) ---
-
-// Load and display the workout history (uses localStorage if Supabase is not configured)
-async function loadWorkoutHistory() {
-    let workouts = [];
-    if (supabase) {
-        // Use Supabase if configured
-        try {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user) {
-                const { data, error } = await supabase
-                    .from('workout_logs')
-                    .select('*')
-                    .eq('user_id', user.id)
-                    .order('date', { ascending: false });
-
-                if (error) throw error;
-                workouts = data;
-            } else {
-                 console.warn("User not logged in for loading workout history from Supabase.");
-            }
-        } catch (error) {
-            console.error('Error loading workout history from Supabase:', error);
-            showError('Failed to load workout history from Supabase.');
-             // Fallback to localStorage if Supabase fails
-             workouts = loadWorkoutsFromLocalStorage();
+    const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    daysOfWeek.forEach(day => {
+        const workoutContentElement = document.getElementById(`${day}Workout`);
+        if (workoutContentElement) {
+            workoutContentElement.textContent = 'Plan not available';
         }
-    } else {
-        // Use localStorage if Supabase is not configured
-        workouts = loadWorkoutsFromLocalStorage();
-    }
-
+    });
+}
+async function loadWorkoutHistory() {
+    const workouts = loadWorkoutsFromLocalStorage();
     updateWorkoutLogTable(workouts);
 }
 
-// Helper function to load workouts from localStorage
 function loadWorkoutsFromLocalStorage() {
     const raw = localStorage.getItem('workoutHistory');
     try {
@@ -280,41 +273,10 @@ function updateWorkoutLogTable(workouts) {
 
 // Log a new workout entry (uses localStorage if Supabase is not configured)
 async function logWorkout(workoutData) {
-    if (supabase) {
-        // Use Supabase if configured
-        try {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) {
-                showError("User not logged in. Cannot log workout to Supabase.");
-                return;
-            }
-
-            const { error } = await supabase
-                .from('workout_logs')
-                .insert([{
-                    user_id: user.id,
-                    ...workoutData
-                }]);
-
-            if (error) throw error;
-
-            console.log("Workout logged to Supabase.");
-
-        } catch (error) {
-            console.error('Error logging workout to Supabase:', error);
-            showError('Failed to log workout to Supabase. Attempting local save.');
-             // Fallback to localStorage if Supabase logging fails
-             logWorkoutLocally(workoutData);
-        }
-    } else {
-        // Use localStorage if Supabase is not configured
-        logWorkoutLocally(workoutData);
-    }
-
-    // After attempting to log (either via Supabase or locally), reload history and close modal
+    logWorkoutLocally(workoutData);
     await loadWorkoutHistory();
-    if (logWorkoutModal) logWorkoutModal.style.display = 'none';
-    if (logWorkoutForm) logWorkoutForm.reset();
+    logWorkoutModal.style.display = 'none';
+    logWorkoutForm.reset();
 }
 
 // Helper function to log workout locally to localStorage
@@ -330,32 +292,10 @@ function logWorkoutLocally(workoutData) {
 
 // Delete a workout entry (uses localStorage if Supabase is not configured)
 async function deleteWorkout(workoutId) {
-     if (supabase) {
-         // Use Supabase if configured
-         try {
-             const { error } = await supabase
-                 .from('workout_logs')
-                 .delete()
-                 .eq('id', workoutId);
+    deleteWorkoutLocally(workoutId);
+    await loadWorkoutHistory();
 
-             if (error) throw error;
-
-             console.log("Workout deleted from Supabase.");
-
-         } catch (error) {
-             console.error('Error deleting workout from Supabase:', error);
-             showError('Failed to delete workout from Supabase. Attempting local deletion.');
-             // Fallback to localStorage if Supabase deletion fails
-             deleteWorkoutLocally(workoutId);
-         }
-     } else {
-         // Use localStorage if Supabase is not configured
-         deleteWorkoutLocally(workoutId);
-     }
-
-     // After attempting to delete, reload history
-     await loadWorkoutHistory();
- }
+}
 
 // Helper function to delete workout locally from localStorage
 function deleteWorkoutLocally(workoutId) {
@@ -368,7 +308,7 @@ function deleteWorkoutLocally(workoutId) {
         saveWorkoutsToLocalStorage(workouts);
         console.log(`Workout with ID ${workoutId} deleted from localStorage.`);
     } else {
-         console.warn(`Workout with ID ${workoutId} not found in localStorage.`);
+        console.warn(`Workout with ID ${workoutId} not found in localStorage.`);
     }
 }
 
@@ -389,13 +329,20 @@ function loadExerciseLibrary() {
                 <div class="exercise-details">
                     <span class="difficulty">${exercise.difficulty}</span>
                     <span class="category">${category}</span>
-                </div>
-            `;
+                    </div>
+                    `;
             exerciseGrid.appendChild(card);
         });
     });
 }
 
+function performLocalLogout() {
+    // Clear local storage data relevant to the user session/profile
+    localStorage.removeItem('userProfile');
+    localStorage.removeItem('workoutHistory'); // Clear local history on logout
+    console.warn("Performing local logout: localStorage cleared.");
+    window.location.href = 'index.html'; // Redirect to login page
+}
 // Add all necessary event listeners to interactive elements
 function addEventListeners() {
     // Add click listeners to all buttons that open the workout logging modal
@@ -425,8 +372,8 @@ function addEventListeners() {
 
             // Basic validation
             if (!workoutData.type || isNaN(workoutData.duration) || isNaN(workoutData.calories)) {
-                 showError("Please fill out all required fields (Workout Type, Duration, Calories).");
-                 return; // Stop the logging process
+                showError("Please fill out all required fields (Workout Type, Duration, Calories).");
+                return; // Stop the logging process
             }
 
             await logWorkout(workoutData); // Use the updated logWorkout function
@@ -462,50 +409,20 @@ function addEventListeners() {
     // Close modal when clicking the close button (X)
     const closeButton = document.querySelector('.modal .close');
     if (closeButton) {
-         closeButton.addEventListener('click', () => {
-             if (logWorkoutModal) logWorkoutModal.style.display = 'none';
-         });
+        closeButton.addEventListener('click', () => {
+            if (logWorkoutModal) logWorkoutModal.style.display = 'none';
+        });
     }
 
 
     // Add click listener to the logout button (uses Supabase if configured, or local)
     if (logoutBtn) {
         logoutBtn.addEventListener('click', async () => {
-            if (supabase) {
-                try {
-                    const { error } = await supabase.auth.signOut();
-                    if (error) throw error;
-                    console.log("Logged out via Supabase.");
-                    window.location.href = 'index.html'; // Redirect after logout
-                } catch (error) {
-                    console.error('Error logging out via Supabase:', error);
-                    showError('Failed to log out via Supabase. Attempting local logout.');
-                     // Fallback to local logout
-                     performLocalLogout();
-                }
-            } else {
-                // Perform local logout if Supabase is not configured
-                performLocalLogout();
-            }
+            performLocalLogout();
         });
     }
 }
 
-// Helper function for local logout
-function performLocalLogout() {
-    // Clear local storage data relevant to the user session/profile
-    localStorage.removeItem('userProfile');
-    localStorage.removeItem('workoutHistory'); // Clear local history on logout
-    console.warn("Performing local logout: localStorage cleared.");
-    window.location.href = 'index.html'; // Redirect to login page
-}
-
-
-// Helper function to show error messages (using alert for simplicity)
 function showError(message) {
-    // In a real application, you would use a more user-friendly way to display errors
     alert(message);
 }
-
-// Initialize the page when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', initWorkoutsPage);

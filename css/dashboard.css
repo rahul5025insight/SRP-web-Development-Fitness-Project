@@ -9,7 +9,7 @@
     padding: var(--spacing-xl) 0;
     /* Using brand colors for the linear gradient */
     background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
-    color: var(--color-text-on-dark); /* White text on dark background */
+    color: var(--color-text-default); /* White text on dark background */
     border-radius: var(--border-radius);
     margin-bottom: var(--spacing-xl);
 }
@@ -27,10 +27,10 @@ nav{
 .nav-links > a{
     padding-right: 10px;
     text-decoration: none;
-    color: var(--color-text-on-dark); /* White text for nav links */
+    color: var(--color-text-default); /* White text for nav links */
 }
 .welcome-section h1 {
-    color: var(--color-text-on-dark); /* White color for headline */
+    color: var(--color-text-default); /* White color for headline */
     font-size: var(--font-size-3xl);
     margin-bottom: var(--spacing-sm);
 }
@@ -50,7 +50,7 @@ nav{
 
 .stat-card {
     background-color: var(--color-bg-card); /* Card background color (Black) */
-    color: var(--color-text-on-dark); /* White text on dark card */
+    color: var(--color-text-default); /* White text on dark card */
     padding: var(--spacing-lg);
     border-radius: var(--border-radius);
     text-align: center;
@@ -89,7 +89,7 @@ nav{
 
 .chart-container {
     background-color: var(--color-bg-card); /* Card background color (Black) */
-     color: var(--color-text-on-dark); /* White text on dark card */
+     color: var(--color-text-default); /* White text on dark card */
     padding: var(--spacing-md);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
@@ -114,7 +114,7 @@ nav{
 
 .recommendation-card {
     background-color: var(--color-bg-card); /* Card background color (Black) */
-    color: var(--color-text-on-dark); /* White text on dark card */
+    color: var(--color-text-default); /* White text on dark card */
     padding: var(--spacing-lg);
     border-radius: var(--border-radius);
     text-align: center;
@@ -138,7 +138,7 @@ nav{
 }
 
 .recommendation-card p {
-    color: var(--color-text-on-dark); /* White text on dark card */
+    color: var(--color-text-default); /* White text on dark card */
     margin-bottom: var(--spacing-md);
 }
 

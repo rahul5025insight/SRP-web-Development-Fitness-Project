@@ -54,7 +54,7 @@
     --color-brand-primary: #ff8c00; /* Greenish primary in dark mode */
     --color-brand-secondary: #000000; /* Bluish secondary in dark mode */
     --color-bg-default: #121212; /* Dark background */
-    --color-text-default: #ffffff; /* White text */
+    --color-text-default: #333333; /* White text */
     --color-bg-card: #1e1e1e; /* Dark card background */
     --color-border-default: #333333; /* Darker border */
     /* Other dark mode colors can be defined here as needed */

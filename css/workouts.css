@@ -4,13 +4,42 @@
 
 /* Apply base body styles, overriding background and text color for this page */
 body {
-    background-color: var(--color-bg-alt); /* Use a light grey background from base */
-    color: var(--color-text-default); /* Use default text color from base */
-    font-family: var(--font-family); /* Use font family from base */
+    background-color: var(--color-bg-alt);
+    /* Use a light grey background from base */
+    color: var(--color-text-default);
+    /* Use default text color from base */
+    font-family: var(--font-family);
+    /* Use font family from base */
     margin: 0;
     padding: 0;
     /* Add some padding to the bottom to ensure content isn't cut off */
     padding-bottom: var(--spacing-xl);
+}
+
+#personalizedWorkouts {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.workout-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.75rem 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.workout-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.workout-card h3 {
+    margin-top: 0;
 }
 
 /* Container for main content, inheriting max-width and padding from base */
@@ -25,14 +54,19 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md); /* Add padding */
-    background-color: var(--color-bg-default); /* White background from base */
-    box-shadow: var(--box-shadow); /* Add subtle shadow from base */
-    margin-bottom: var(--spacing-lg); /* Space below the nav */
+    padding: var(--spacing-sm) var(--spacing-md);
+    /* Add padding */
+    background-color: var(--color-bg-default);
+    /* White background from base */
+    box-shadow: var(--box-shadow);
+    /* Add subtle shadow from base */
+    margin-bottom: var(--spacing-lg);
+    /* Space below the nav */
 }
 
-nav > .logo > img {
-    height: 50px; /* Adjust logo size for better fit */
+nav>.logo>img {
+    height: 50px;
+    /* Adjust logo size for better fit */
     width: auto;
 }
 
@@ -40,45 +74,64 @@ nav > .logo > img {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-md); /* Use spacing variable */
+    gap: var(--spacing-md);
+    /* Use spacing variable */
 }
 
 .nav-links a {
-    color: var(--color-text-default); /* Default text color for links */
-    text-decoration: none; /* Remove underline */
-    padding: var(--spacing-xs) var(--spacing-sm); /* Add padding to links */
-    border-radius: var(--border-radius); /* Rounded corners for active state */
-    transition: var(--transition); /* Smooth transitions */
+    color: var(--color-text-default);
+    /* Default text color for links */
+    text-decoration: none;
+    /* Remove underline */
+    padding: var(--spacing-xs) var(--spacing-sm);
+    /* Add padding to links */
+    border-radius: var(--border-radius);
+    /* Rounded corners for active state */
+    transition: var(--transition);
+    /* Smooth transitions */
 }
 
 .nav-links a:hover {
-    color: var(--color-brand-primary); /* Primary brand color on hover */
+    color: var(--color-brand-primary);
+    /* Primary brand color on hover */
 }
 
 .nav-links a.active {
-    background-color: var(--color-brand-primary); /* Primary brand color for active link */
-    color: var(--color-text-on-primary); /* White text on primary background */
+    background-color: var(--color-brand-primary);
+    /* Primary brand color for active link */
+    color: var(--color-text-on-primary);
+    /* White text on primary background */
 }
 
 /* Style for the logout button in the nav */
 #logoutBtn {
     /* Inherits styles from .btn.secondary in base.css */
-    margin-left: var(--spacing-md); /* Add space to the left */
+    margin-left: var(--spacing-md);
+    /* Add space to the left */
 }
 
 /* Main content sections */
 main section {
-    margin-bottom: var(--spacing-xl); /* Consistent spacing between sections */
-    padding: var(--spacing-lg); /* Add padding to sections */
-    background-color: var(--color-bg-default); /* White background for sections */
-    border-radius: var(--border-radius); /* Rounded corners for sections */
-    box-shadow: var(--box-shadow); /* Add shadow to sections */
+    margin-bottom: var(--spacing-xl);
+    /* Consistent spacing between sections */
+    padding: var(--spacing-lg);
+    /* Add padding to sections */
+    background-color: var(--color-bg-default);
+    /* White background for sections */
+    border-radius: var(--border-radius);
+    /* Rounded corners for sections */
+    box-shadow: var(--box-shadow);
+    /* Add shadow to sections */
 }
 
-main h1, main h2 {
-    color: var(--color-brand-secondary); /* Secondary brand color for headings */
-    margin-bottom: var(--spacing-lg); /* Space below headings */
-    text-align: center; /* Center headings */
+main h1,
+main h2 {
+    color: var(--color-brand-secondary);
+    /* Secondary brand color for headings */
+    margin-bottom: var(--spacing-lg);
+    /* Space below headings */
+    text-align: center;
+    /* Center headings */
 }
 
 /* Workout Overview Section */
@@ -89,41 +142,57 @@ main h1, main h2 {
 .workout-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-md); /* Use spacing variable */
-    margin-bottom: var(--spacing-lg); /* Space below stats cards */
+    gap: var(--spacing-md);
+    /* Use spacing variable */
+    margin-bottom: var(--spacing-lg);
+    /* Space below stats cards */
 }
 
 .workout-stats .stat-card {
-    background-color: var(--color-bg-card); /* Dark card background from base */
-    color: var(--color-text-on-dark); /* White text on dark background */
-    padding: var(--spacing-lg); /* Use spacing variable */
-    border-radius: var(--border-radius); /* Use border-radius from base */
+    background-color: var(--color-bg-card);
+    /* Dark card background from base */
+    color: var(--color-text-on-dark);
+    /* White text on dark background */
+    padding: var(--spacing-lg);
+    /* Use spacing variable */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
     text-align: center;
-    transition: var(--transition); /* Use transition from base */
-    box-shadow: var(--box-shadow); /* Add shadow from base */
+    transition: var(--transition);
+    /* Use transition from base */
+    box-shadow: var(--box-shadow);
+    /* Add shadow from base */
 }
 
 .workout-stats .stat-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--box-shadow-lg); /* Larger shadow on hover */
+    box-shadow: var(--box-shadow-lg);
+    /* Larger shadow on hover */
 }
 
 .workout-stats .stat-card i {
     font-size: 2.5rem;
-    color: var(--color-brand-primary); /* Primary brand color for icons */
-    margin-bottom: var(--spacing-sm); /* Use spacing variable */
+    color: var(--color-brand-primary);
+    /* Primary brand color for icons */
+    margin-bottom: var(--spacing-sm);
+    /* Use spacing variable */
 }
 
 .workout-stats .stat-card h3 {
-    color: var(--color-text-on-dark); /* White text for headings */
-    margin-bottom: var(--spacing-sm); /* Use spacing variable */
-    font-size: var(--font-size-lg); /* Use font size from base */
+    color: var(--color-text-on-dark);
+    /* White text for headings */
+    margin-bottom: var(--spacing-sm);
+    /* Use spacing variable */
+    font-size: var(--font-size-lg);
+    /* Use font size from base */
 }
 
 .workout-stats .stat-card p {
-    font-size: var(--font-size-xl); /* Use font size from base */
+    font-size: var(--font-size-xl);
+    /* Use font size from base */
     font-weight: 600;
-    color: var(--color-brand-primary); /* Primary brand color for values */
+    color: var(--color-brand-primary);
+    /* Primary brand color for values */
 }
 
 /* Weekly Schedule Section */
@@ -134,48 +203,69 @@ main h1, main h2 {
 .schedule-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-md); /* Use spacing variable */
+    gap: var(--spacing-md);
+    /* Use spacing variable */
 }
 
 .day-card {
-    background-color: var(--color-bg-card); /* Dark card background */
-    color: var(--color-text-on-dark); /* White text */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    padding: var(--spacing-md); /* Use spacing variable */
-    transition: var(--transition); /* Use transition from base */
-    box-shadow: var(--box-shadow); /* Add shadow from base */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack content vertically */
-    justify-content: space-between; /* Space out content */
+    background-color: var(--color-bg-card);
+    /* Dark card background */
+    color: var(--color-text-on-dark);
+    /* White text */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    padding: var(--spacing-md);
+    /* Use spacing variable */
+    transition: var(--transition);
+    /* Use transition from base */
+    box-shadow: var(--box-shadow);
+    /* Add shadow from base */
+    display: flex;
+    /* Use flexbox for layout */
+    flex-direction: column;
+    /* Stack content vertically */
+    justify-content: space-between;
+    /* Space out content */
 }
 
 .day-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--box-shadow-lg); /* Larger shadow on hover */
+    box-shadow: var(--box-shadow-lg);
+    /* Larger shadow on hover */
 }
 
 .day-card h3 {
-    color: var(--color-brand-primary); /* Primary brand color for day names */
-    margin-bottom: var(--spacing-md); /* Use spacing variable */
-    font-size: var(--font-size-lg); /* Use font size from base */
-    text-align: center; /* Center day names */
+    color: var(--color-brand-primary);
+    /* Primary brand color for day names */
+    margin-bottom: var(--spacing-md);
+    /* Use spacing variable */
+    font-size: var(--font-size-lg);
+    /* Use font size from base */
+    text-align: center;
+    /* Center day names */
 }
 
 .workout-content {
     /* Content inside the day card */
-    flex-grow: 1; /* Allow content to take up available space */
-    margin-bottom: var(--spacing-md); /* Space below workout description */
-    text-align: center; /* Center workout text */
+    flex-grow: 1;
+    /* Allow content to take up available space */
+    margin-bottom: var(--spacing-md);
+    /* Space below workout description */
+    text-align: center;
+    /* Center workout text */
 }
 
 .workout-content p {
-    font-size: var(--font-size-md); /* Use font size from base */
-    color: var(--color-text-on-dark); /* White text */
+    font-size: var(--font-size-md);
+    /* Use font size from base */
+    color: var(--color-text-on-dark);
+    /* White text */
 }
 
 
 .log-workout-btn {
-    width: 100%; /* Make button full width */
+    width: 100%;
+    /* Make button full width */
     /* Inherits styles from .btn.primary in base.css */
 }
 
@@ -187,76 +277,108 @@ main h1, main h2 {
 .exercise-filters {
     display: flex;
     justify-content: center;
-    gap: var(--spacing-sm); /* Use spacing variable */
+    gap: var(--spacing-sm);
+    /* Use spacing variable */
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-md); /* Space below filters */
+    margin-bottom: var(--spacing-md);
+    /* Space below filters */
 }
 
 .filter-btn {
     /* Inherits styles from .btn.secondary in base.css */
-    padding: var(--spacing-sm) var(--spacing-md); /* Use spacing variables */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    transition: var(--transition); /* Use transition from base */
-    border: 1px solid var(--color-brand-primary); /* Primary brand color border */
-    color: var(--color-brand-primary); /* Primary brand color text */
-    background-color: var(--color-bg-default); /* White background */
+    padding: var(--spacing-sm) var(--spacing-md);
+    /* Use spacing variables */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    transition: var(--transition);
+    /* Use transition from base */
+    border: 1px solid var(--color-brand-primary);
+    /* Primary brand color border */
+    color: var(--color-brand-primary);
+    /* Primary brand color text */
+    background-color: var(--color-bg-default);
+    /* White background */
 }
 
 .filter-btn:hover {
-    background-color: var(--color-brand-primary); /* Primary brand color on hover */
-    color: var(--color-text-on-primary); /* White text on hover */
+    background-color: var(--color-brand-primary);
+    /* Primary brand color on hover */
+    color: var(--color-text-on-primary);
+    /* White text on hover */
 }
 
 .filter-btn.active {
-    background-color: var(--color-brand-primary); /* Primary brand color when active */
-    color: var(--color-text-on-primary); /* White text when active */
+    background-color: var(--color-brand-primary);
+    /* Primary brand color when active */
+    color: var(--color-text-on-primary);
+    /* White text when active */
 }
 
 .exercise-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-md); /* Use spacing variable */
+    gap: var(--spacing-md);
+    /* Use spacing variable */
 }
 
 .exercise-card {
-    background-color: var(--color-bg-card); /* Dark card background */
-    color: var(--color-text-on-dark); /* White text */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    padding: var(--spacing-md); /* Use spacing variable */
-    transition: var(--transition); /* Use transition from base */
-    box-shadow: var(--box-shadow); /* Add shadow from base */
+    background-color: var(--color-bg-card);
+    /* Dark card background */
+    color: var(--color-text-on-dark);
+    /* White text */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    padding: var(--spacing-md);
+    /* Use spacing variable */
+    transition: var(--transition);
+    /* Use transition from base */
+    box-shadow: var(--box-shadow);
+    /* Add shadow from base */
 }
 
 .exercise-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--box-shadow-lg); /* Larger shadow on hover */
+    box-shadow: var(--box-shadow-lg);
+    /* Larger shadow on hover */
 }
 
 .exercise-card img {
     width: 100%;
-    height: 200px; /* Fixed height for images */
-    object-fit: cover; /* Cover the area while maintaining aspect ratio */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    margin-bottom: var(--spacing-md); /* Use spacing variable */
+    height: 200px;
+    /* Fixed height for images */
+    object-fit: cover;
+    /* Cover the area while maintaining aspect ratio */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    margin-bottom: var(--spacing-md);
+    /* Use spacing variable */
 }
 
 .exercise-card h3 {
-    color: var(--color-brand-primary); /* Primary brand color for exercise names */
-    margin-bottom: var(--spacing-sm); /* Use spacing variable */
-    font-size: var(--font-size-lg); /* Use font size from base */
+    color: var(--color-brand-primary);
+    /* Primary brand color for exercise names */
+    margin-bottom: var(--spacing-sm);
+    /* Use spacing variable */
+    font-size: var(--font-size-lg);
+    /* Use font size from base */
 }
 
 .exercise-card p {
-    color: var(--color-text-on-dark); /* White text for description */
-    margin-bottom: var(--spacing-md); /* Use spacing variable */
-    font-size: var(--font-size-md); /* Use font size from base */
+    color: var(--color-text-on-dark);
+    /* White text for description */
+    margin-bottom: var(--spacing-md);
+    /* Use spacing variable */
+    font-size: var(--font-size-md);
+    /* Use font size from base */
 }
 
 .exercise-details {
     display: flex;
     justify-content: space-between;
-    font-size: var(--font-size-sm); /* Use font size from base */
-    color: var(--color-text-light); /* Lighter grey text for details */
+    font-size: var(--font-size-sm);
+    /* Use font size from base */
+    color: var(--color-text-light);
+    /* Lighter grey text for details */
 }
 
 .exercise-details .difficulty {
@@ -274,146 +396,195 @@ main h1, main h2 {
 }
 
 .workout-log-container {
-    background-color: var(--color-bg-card); /* Dark card background */
-    color: var(--color-text-on-dark); /* White text */
-    padding: var(--spacing-md); /* Use spacing variable */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    box-shadow: var(--box-shadow); /* Add shadow from base */
-    overflow-x: auto; /* Add horizontal scroll for small screens */
+    background-color: var(--color-bg-card);
+    /* Dark card background */
+    color: var(--color-text-on-dark);
+    /* White text */
+    padding: var(--spacing-md);
+    /* Use spacing variable */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    box-shadow: var(--box-shadow);
+    /* Add shadow from base */
+    overflow-x: auto;
+    /* Add horizontal scroll for small screens */
 }
 
 #workoutLogTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: var(--spacing-md); /* Space above the table */
+    margin-top: var(--spacing-md);
+    /* Space above the table */
 }
 
 #workoutLogTable th {
-    background-color: var(--color-bg-alt); /* Alternate background for table header */
-    color: var(--color-brand-secondary); /* Secondary brand color for header text */
-    padding: var(--spacing-sm); /* Use spacing variable */
+    background-color: var(--color-bg-alt);
+    /* Alternate background for table header */
+    color: var(--color-brand-secondary);
+    /* Secondary brand color for header text */
+    padding: var(--spacing-sm);
+    /* Use spacing variable */
     text-align: left;
     font-weight: 600;
-    border-bottom: 2px solid var(--color-brand-primary); /* Primary brand color border below header */
+    border-bottom: 2px solid var(--color-brand-primary);
+    /* Primary brand color border below header */
 }
 
 #workoutLogTable td {
-    padding: var(--spacing-sm); /* Use spacing variable */
-    border-bottom: 1px solid var(--color-border-default); /* Default border color */
-    color: var(--color-text-on-dark); /* White text for table data */
+    padding: var(--spacing-sm);
+    /* Use spacing variable */
+    border-bottom: 1px solid var(--color-border-default);
+    /* Default border color */
+    color: var(--color-text-on-dark);
+    /* White text for table data */
 }
 
 #workoutLogTable tbody tr:last-child td {
-    border-bottom: none; /* No border for the last row */
+    border-bottom: none;
+    /* No border for the last row */
 }
 
 /* Style for the delete button in the workout log table */
 #workoutLogTable .delete-workout {
     /* Inherits styles from .btn.secondary in base.css */
-    padding: var(--spacing-xs) var(--spacing-sm); /* Smaller padding for a compact button */
-    font-size: var(--font-size-sm); /* Smaller font size */
+    padding: var(--spacing-xs) var(--spacing-sm);
+    /* Smaller padding for a compact button */
+    font-size: var(--font-size-sm);
+    /* Smaller font size */
 }
 
 
 /* Workout Logging Modal - Overrides base modal styles */
 #logWorkoutModal .modal-content {
     max-width: 500px;
-    background-color: var(--color-bg-default); /* White background for modal content */
-    color: var(--color-text-default); /* Default text color */
-    padding: var(--spacing-lg); /* Use spacing variable */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    box-shadow: var(--box-shadow-lg); /* Larger shadow for modal */
+    background-color: var(--color-bg-default);
+    /* White background for modal content */
+    color: var(--color-text-default);
+    /* Default text color */
+    padding: var(--spacing-lg);
+    /* Use spacing variable */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    box-shadow: var(--box-shadow-lg);
+    /* Larger shadow for modal */
 }
 
 #logWorkoutModal h2 {
-    color: var(--color-brand-secondary); /* Secondary brand color for modal title */
-    margin-bottom: var(--spacing-lg); /* Space below title */
-    text-align: center; /* Center modal title */
+    color: var(--color-brand-secondary);
+    /* Secondary brand color for modal title */
+    margin-bottom: var(--spacing-lg);
+    /* Space below title */
+    text-align: center;
+    /* Center modal title */
 }
 
 #logWorkoutForm {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md); /* Use spacing variable for form groups */
+    gap: var(--spacing-md);
+    /* Use spacing variable for form groups */
 }
 
 #logWorkoutForm .form-group {
-    margin-bottom: 0; /* Remove default margin as gap is used */
+    margin-bottom: 0;
+    /* Remove default margin as gap is used */
 }
 
 #logWorkoutForm label {
     display: block;
-    margin-bottom: var(--spacing-xs); /* Space below label */
+    margin-bottom: var(--spacing-xs);
+    /* Space below label */
     font-weight: 600;
-    color: var(--color-text-default); /* Default text color for labels */
+    color: var(--color-text-default);
+    /* Default text color for labels */
 }
 
 #logWorkoutForm input[type="number"],
 #logWorkoutForm select,
 #logWorkoutForm textarea {
     width: 100%;
-    padding: var(--spacing-sm); /* Use spacing variable */
-    border: 1px solid var(--color-border-default); /* Default border color */
-    border-radius: var(--border-radius); /* Use border-radius from base */
-    background-color: var(--color-bg-default); /* White background */
-    color: var(--color-text-default); /* Default text color */
-    font-size: var(--font-size-md); /* Use font size from base */
-    transition: var(--transition); /* Use transition from base */
+    padding: var(--spacing-sm);
+    /* Use spacing variable */
+    border: 1px solid var(--color-border-default);
+    /* Default border color */
+    border-radius: var(--border-radius);
+    /* Use border-radius from base */
+    background-color: var(--color-bg-default);
+    /* White background */
+    color: var(--color-text-default);
+    /* Default text color */
+    font-size: var(--font-size-md);
+    /* Use font size from base */
+    transition: var(--transition);
+    /* Use transition from base */
 }
 
 #logWorkoutForm input[type="number"]:focus,
 #logWorkoutForm select:focus,
 #logWorkoutForm textarea:focus {
     outline: none;
-    border-color: var(--color-brand-primary); /* Primary brand color on focus */
-    box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2); /* Primary brand color with opacity for focus ring */
+    border-color: var(--color-brand-primary);
+    /* Primary brand color on focus */
+    box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+    /* Primary brand color with opacity for focus ring */
 }
 
 #logWorkoutForm button[type="submit"] {
     /* Inherits styles from .btn.primary in base.css */
-    margin-top: var(--spacing-md); /* Space above the submit button */
+    margin-top: var(--spacing-md);
+    /* Space above the submit button */
 }
 
 /* Close button for the modal */
 #logWorkoutModal .close {
-    color: var(--color-text-light); /* Light grey color for close button */
+    color: var(--color-text-light);
+    /* Light grey color for close button */
     font-size: 28px;
     font-weight: bold;
     position: absolute;
-    top: var(--spacing-sm); /* Position from top */
-    right: var(--spacing-sm); /* Position from right */
+    top: var(--spacing-sm);
+    /* Position from top */
+    right: var(--spacing-sm);
+    /* Position from right */
     cursor: pointer;
-    transition: var(--transition); /* Smooth transition */
+    transition: var(--transition);
+    /* Smooth transition */
 }
 
 #logWorkoutModal .close:hover,
 #logWorkoutModal .close:focus {
-    color: var(--color-text-default); /* Default text color on hover/focus */
+    color: var(--color-text-default);
+    /* Default text color on hover/focus */
 }
 
 
 /* Responsive Adjustments - Using breakpoints from base.css */
 @media (max-width: 900px) {
     .schedule-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjust min width */
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        /* Adjust min width */
     }
 
     .exercise-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Adjust min width */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        /* Adjust min width */
     }
 }
 
 @media (max-width: 600px) {
     .workout-stats {
-        grid-template-columns: 1fr; /* Stack stats cards on small screens */
+        grid-template-columns: 1fr;
+        /* Stack stats cards on small screens */
     }
 
     .schedule-grid {
-        grid-template-columns: 1fr; /* Stack day cards on small screens */
+        grid-template-columns: 1fr;
+        /* Stack day cards on small screens */
     }
 
     .exercise-grid {
-        grid-template-columns: 1fr; /* Stack exercise cards on small screens */
+        grid-template-columns: 1fr;
+        /* Stack exercise cards on small screens */
     }
 
     .exercise-filters {
@@ -423,11 +594,13 @@ main h1, main h2 {
 
     .filter-btn {
         width: 100%;
-        max-width: 200px; /* Limit max width of filter buttons */
+        max-width: 200px;
+        /* Limit max width of filter buttons */
     }
 
     .workout-log-container {
-        overflow-x: auto; /* Enable horizontal scroll for the table */
+        overflow-x: auto;
+        /* Enable horizontal scroll for the table */
     }
 
     /* Adjust padding for smaller screens */
@@ -438,10 +611,10 @@ main h1, main h2 {
     .workout-stats .stat-card,
     .day-card,
     .exercise-card {
-         padding: var(--spacing-md);
+        padding: var(--spacing-md);
     }
 
-     #logWorkoutModal .modal-content {
+    #logWorkoutModal .modal-content {
         padding: var(--spacing-md);
-     }
+    }
 }

@@ -8,7 +8,7 @@ const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 const signUpBtn = document.getElementById('signUpBtn');
 const authModal = document.getElementById('authModal');
 const authForm = document.getElementById('authForm');
-const closeBtn = document.querySelector('.close');
+const closeBtn = document.getElementById('closeBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 
 // Check if user is already logged in

@@ -20,8 +20,100 @@ const totalProteinElement = document.getElementById('totalProtein');
 const totalCarbsElement = document.getElementById('totalCarbs');
 const totalFatsElement = document.getElementById('totalFats');
 const logoutBtn = document.getElementById('logoutBtn'); // Keep if you have logout functionality
+// ---------------------------------------------------------------------------------------------------------------
+const API_KEY = '9fd8498df74c4e8fb8083fdfe1a8cafc';
+const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
 
+// Elements
+const logBtn = document.getElementById('logFoodBtn');
+const modal = document.getElementById('foodModal');
+const closeBtn = modal.querySelector('.close');
+const form = document.getElementById('foodForm');
+const logBody = document.getElementById('foodLogBody');
+const recContainer = document.getElementById('recommendations');
+// --- Food Log Persistence ---
+function loadFoodLog() {
+  return JSON.parse(localStorage.getItem('foodLog') || '[]');
+}
+function saveFoodLog(arr) {
+  localStorage.setItem('foodLog', JSON.stringify(arr));
+}
+function renderFoodLog() {
+  const log = loadFoodLog();
+  logBody.innerHTML = '';
+  log.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${new Date(item.date).toLocaleDateString()}</td>
+      <td>${item.foodName}</td>
+      <td>${item.servingSize}</td>
+      <td>${item.foodCalories}</td>
+      <td><button class="delete" data-id="${item.id}">×</button></td>
+    `;
+    logBody.appendChild(tr);
+  });
+}
+logBody.addEventListener('click', e => {
+  if (e.target.matches('.delete')) {
+    const id = e.target.dataset.id;
+    let log = loadFoodLog();
+    log = log.filter(i => i.id !== id);
+    saveFoodLog(log);
+    renderFoodLog();
+  }
+});
 
+// --- Modal Logic ---
+logBtn.onclick = () => modal.style.display = 'block';
+closeBtn.onclick = () => modal.style.display = 'none';
+window.onclick = e => { if (e.target === modal) modal.style.display='none'; };
+
+form.onsubmit = e => {
+  e.preventDefault();
+  const data = new FormData(form);
+  const entry = {
+    id: Date.now().toString(),
+    date: new Date().toISOString(),
+    foodName: data.get('foodName'),
+    servingSize: data.get('servingSize'),
+    foodCalories: data.get('foodCalories')
+  };
+  const log = loadFoodLog();
+  log.push(entry);
+  saveFoodLog(log);
+  renderFoodLog();
+  form.reset();
+  modal.style.display = 'none';
+};
+
+// --- Food Recommendations ---
+async function fetchFoodRecommendations() {
+  const { dietaryPrefs, targetCalories } = userProfile;
+  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${targetCalories}&diet=${dietaryPrefs}&apiKey=${API_KEY}`;
+  recContainer.innerHTML = '<p>Loading…</p>';
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    recContainer.innerHTML = data.meals.map(m => `
+      <div class="meal-card">
+        <h4>${m.title}</h4>
+        <p>Ready in ${m.readyInMinutes} min • ${m.servings} servings</p>
+        <a href="${m.sourceUrl}" target="_blank">View Recipe</a>
+      </div>
+    `).join('');
+  } catch (err) {
+    console.error('Rec API error:', err);
+    recContainer.innerText = 'Unable to load recommendations.';
+  }
+}
+
+// --- Init ---
+document.addEventListener('DOMContentLoaded', () => {
+  renderFoodLog();
+  fetchFoodRecommendations();
+});
+// -----------------------------------------------------------------------------------------------------------------------------------
 function calculateAndDisplayMacros(profile) {
     // 1. Convert weight to kg
     let weightKg = parseFloat(profile.weight);
@@ -114,80 +206,7 @@ function loadAndDisplayProfile() {
         // Optionally redirect to profile setup page
         window.location.href = 'profile-setup.html';
     }
-}
-
-// --- Existing Functions (Keep if needed for other features) ---
-
-// Initialize Diet Page (Modified to call loadAndDisplayProfile)
-async function initDietPage() {
-    console.log("Initializing Diet Page...");
-    // Load and display profile data from localStorage first
-    loadAndDisplayProfile();
-
-    // You can keep your Supabase authentication and data fetching logic here
-    // if you are using it for other features like fetching meal plans or food logs.
-    // Example:
-    // if (supabase) { // Check if Supabase client was initialized
-    //     try {
-    //         const { data: { user } } = await supabase.auth.getUser();
-    //         if (!user) {
-    //             window.location.href = 'index.html'; // Redirect if not authenticated
-    //             return;
-    //         }
-    //         // Fetch user profile from Supabase (if you have one)
-    //         const { data: profile, error: profileError } = await supabase
-    //             .from('profiles')
-    //             .select('*')
-    //             .eq('user_id', user.id)
-    //             .single();
-    //         if (profileError) throw profileError;
-    //         console.log("Fetched Supabase profile:", profile);
-    //         // Use Supabase profile data for calculations/display if preferred
-    //         // updateMacroTargets(profile);
-    //         // generateMealPlan(profile);
-    //         // loadFoodLog(user.id);
-    //     } catch (error) {
-    //         console.error('Error initializing diet page (Supabase):', error);
-    //         // alert('Error loading diet plan. Please try again.');
-    //     }
-    // } else {
-    //     console.warn('Supabase client not configured or initialized. Skipping Supabase operations.');
-    // }
-
-
-    // If you are not using Supabase for profile/macro calculation,
-    // you might need to implement logic here to calculate macros based on localStorage data.
-    // For this example, the macro targets will remain '-- kcal' unless calculated.
-}
-
-// Calculate and Update Macro Targets (Keep if you have calculation logic)
-// function updateMacroTargets(profile) { ... }
-
-// Generate Meal Plan (Keep if you have meal plan generation logic)
-// function generateMealPlan(profile) { ... }
-
-// Load Food Log (Keep if you are using Supabase for food logging)
-// async function loadFoodLog(userId) { ... }
-
-// Update Food Log Table (Keep if you are using Supabase for food logging)
-// function updateFoodLogTable(foodLog) { ... }
-
-// Calculate Totals (Keep if you are using Supabase for food logging)
-// function calculateTotals(foodLog) { ... }
-
-// Log Meal (Keep if you are using Supabase for food logging)
-// async function logMeal(mealData) { ... }
-
-// Delete Food Entry (Keep if you are using Supabase for food logging)
-// async function deleteFoodEntry(entryId) { ... }
-
-// Event Listeners (Keep if needed for modal, logging, logout)
-// Ensure elements exist before adding listeners
-
-
-document.addEventListener('DOMContentLoaded', initDietPage);
-// -----------------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------------
+}document.addEventListener('DOMContentLoaded', initDietPage);
 async function initDietPage() {
     loadAndDisplayProfile();
     const profile = JSON.parse(localStorage.getItem('userProfile'));
@@ -200,12 +219,12 @@ async function initDietPage() {
 document.addEventListener('DOMContentLoaded', () => {
     const logButtons = document.querySelectorAll('.log-meal-btn');
     const modal = document.getElementById('mealModal');
-    const closeBtn = document.getElementById('closeModal');
+    // const closeBtn = document.getElementById('closeModal');
     const mealForm = document.getElementById('mealForm');
     const logList = document.getElementById('logList');
     const totalCalEl = document.getElementById('totalCalories');
 
-    
+
     let meals = [];
 
     // 1. Open modal
@@ -217,13 +236,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Assuming logMealForm and close button exist within the modal
-    const closeButton = logMealModal.querySelector('.close'); // Use querySelector for robustness
-    if (closeButton) {
-         closeButton.addEventListener('click', () => {
-             logMealModal.style.display = 'none';
-         });
+    // const closeButton = logMealModal.querySelector('.close'); // Use querySelector for robustness
+    // if (closeButton) {
+    //     closeButton.addEventListener('click', () => {
+    //         logMealModal.style.display = 'none';
+    //     });
+    // }
+    if (logMealModal) {
+        const closeButton = logMealModal.querySelector('#closeModal');
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                logMealModal.classList.add('hidden');
+            });
+        }
     }
-
     // Close modal when clicking outside
     window.addEventListener('click', (e) => {
         if (e.target === logMealModal) {
@@ -233,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 2. Close modal
+
 closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
 window.addEventListener('click', e => {
     if (e.target === modal) modal.classList.add('hidden');

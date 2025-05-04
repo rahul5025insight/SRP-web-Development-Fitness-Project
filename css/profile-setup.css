@@ -22,6 +22,32 @@ body {
 }
 
 .profile-form {
+    padding: 2rem;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.profile-form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.profile-form input,
+.profile-form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.profile-form {
     max-width: 500px;
     background-color: var(--color-border-default);
     width: 100%;

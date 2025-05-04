@@ -59,7 +59,6 @@
                     <h3>Log Your Meal</h3>
                     <form id="mealForm">
                         <input type="hidden" id="mealType" name="mealType" />
-                        <!-- optional: track Breakfast/Lunch/etc --> -->
                         <div class="form-group">
                             <label for="foodName">Food Name</label>
                             <input type="text" id="foodName" required />
@@ -93,14 +92,17 @@
     </table>
   </section>
 
-  <section id="recommendationSection">
+  <section class="meal-plan">
     <h2>Daily Meal Recommendations</h2>
-    <div id="recommendations">Loading…</div>
+    <div class="meal-cards" id="recommendations">
+      <!-- .meal-card elements go here -->
+    </div>
   </section>
+  
 </div>
 
 <!-- Log Food Modal -->
-<div id="foodModal" class="modal">
+<div id="foodModal" class="modal hidden">
 <div class="modal-content">
   <span class="close">&times;</span>
   <h3>Log a Food Item</h3>

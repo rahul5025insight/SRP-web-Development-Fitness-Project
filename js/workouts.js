@@ -4,6 +4,15 @@ window.addEventListener('storage', e => {
 });
 
 const API_KEY = '5fHApZiU8h9hc8wzsAT8cg==sUw8ZX4abzNlCLIO';
+function mapPrefToApiType(pref) {
+    switch (pref) {
+        case 'strength': return 'strength';
+        case 'cardio': return 'cardio';
+        case 'flexibility': return 'stretching';
+        case 'balance': return null;           // no direct mapping
+        default: return null;
+    }
+}
 
 const difficultyMap = {
     beginner: 'beginner',
@@ -18,56 +27,77 @@ const defaultDurations = {
 async function fetchRecommendations(profile) {
     const container = document.getElementById('recommendations');
     container.innerHTML = '<p>Loading…</p>';
-    console.debug('fetchRecommendations got profile:', profile);
 
-    try {
+    // build a list of valid types to query
+    const prefs = Array.isArray(profile.preferences)
+        ? profile.preferences
+        : [];
+    const types = prefs
+        .map(mapPrefToApiType)
+        .filter(t => !!t);
 
-        const types = (profile.preferences?.length
-            ? profile.preferences.join(',')
-            : 'strength');      // default to strength
-        const diff = difficultyMap[profile.fitnessLevel]
-            || 'beginner';
-        console.debug('→ Using difficulty param:', diff)
-        const url = `https://api.api-ninjas.com/v1/exercises?type=${types}&difficulty=${diff}`;
+    // if nothing left, default to 'strength'
+    if (types.length === 0) types.push('strength');
 
-        console.log('➡️ Fetching workouts:', url);
-        const res = await fetch(url, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'X-Api-Key': API_KEY,
-                'Accept': 'application/json'
+    const diff = {
+        beginner: 'beginner',
+        intermediate: 'intermediate',
+        advanced: 'expert'
+    }[profile.fitnessLevel] || 'beginner';
+
+    let allExercises = [];
+
+    for (let type of types) {
+        const url = new URL('https://api.api-ninjas.com/v1/exercises');
+        url.searchParams.set('type', type);
+        url.searchParams.set('difficulty', diff);
+
+        try {
+            const res = await fetch(url.toString(), {
+                headers: {
+                    'X-Api-Key': API_KEY,
+                    'Accept': 'application/json'
+                }
+            });
+            if (!res.ok) {
+                console.warn(`Workout API (${type}) failed:`, res.status);
+                continue;
             }
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const list = await res.json();
-
-        renderRecommendations(list);
-    } catch (err) {
-        console.error('API error:', err);
-        container.innerText = 'Unable to load recommendations. Check console.';
+            const list = await res.json();
+            allExercises = allExercises.concat(list);
+        } catch (err) {
+            console.error('Network error fetching', type, err);
+        }
     }
+
+    renderRecommendations(allExercises);
 }
 function renderRecommendations(list) {
     const container = document.getElementById('recommendations');
-    container.innerHTML = '';
-    if (!list.length) {
+    container.innerHTML = '';  // clear loading text
+
+    if (!Array.isArray(list) || list.length === 0) {
         container.innerText = 'No workouts found for your profile.';
         return;
     }
+
     list.forEach(w => {
-        const raw = w.description || w.instructions || '';
-        const desc = typeof raw === 'string'
-            ? raw.replace(/<[^>]+>/g, '')
-            : 'No description.';
+        const descRaw = w.description || w.instructions || '';
+        const desc = typeof descRaw === 'string'
+            ? descRaw.replace(/<[^>]+>/g, '')
+            : '';
+
+        const dur = w.duration
+            || { beginner: 10, intermediate: 18, expert: 30 }[w.difficulty]
+            || '--';
+
         const card = document.createElement('div');
         card.className = 'workout-card';
-        const dur = w.duration || defaultDurations[w.difficulty] || '—';
         card.innerHTML = `
-                   <h3>${w.name}</h3>
-                   <p>${desc}</p>
-                   <small>Duration: ${dur} min</small>
-                 `;
+        <h3>${w.name}</h3>
+        <p>${desc}</p>
+        <small>Duration: ${dur} min</small>
+      `;
         container.appendChild(card);
     });
 }

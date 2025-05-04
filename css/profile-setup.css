@@ -1,166 +1,201 @@
 /* profile-setup.css */
-@import url('base.css');
-/* Import base styles */
+@import url('base.css'); /* Make sure base.css doesn't override text colors to light ones */
 
-/* Basic body styling for background and centering form */
+/* --- Modern Body Styling --- */
 body {
-    font-family: var(--font-family);
+    font-family: var(--font-family, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif);
     line-height: 1.6;
     margin: 0;
-    padding: var(--spacing-xl) var(--spacing-md);
-    background-color: var(--color-brand-secondary);
-    /* Use alternate background color from base */
+    padding: 2rem 1rem;
+    background-color: #f4f7f6;
     display: flex;
     justify-content: center;
-    /* Center form horizontally */
-    align-items: flex-start;
-    /* Align form to the top */
+    align-items: center;
     min-height: 100vh;
+    color: #111; /* Default dark text */
     box-sizing: border-box;
-    color: var(--color-brand-secondary);
-    /* Use default text color from base */
 }
 
+/* --- Minimal & Professional Form Card --- */
 .profile-form {
     padding: 2rem;
     border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
 }
 
-.profile-form .form-group {
-    margin-bottom: 1.25rem;
-}
-
-.profile-form label {
+/* --- Clear Form Title --- */
+.profile-form .form-title {
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
+}
+
+/* --- Consistent Form Groups --- */
+.profile-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* --- Clear & Readable Labels --- */
+.profile-form label {
+    font-weight: 500;
     display: block;
     margin-bottom: 0.5rem;
+    color: #222; /* Dark label color */
+    font-size: 1rem;
 }
 
-.profile-form input,
+/* Specific rule for labels inside .input-with-unit (ONLY if using the recommended HTML change) */
+/*
+.profile-form .input-with-unit label {
+    color: #111;
+    font-weight: normal;
+    margin-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+*/
+
+/* --- Modern Input & Select Styling --- */
+.profile-form input[type="text"],
+.profile-form input[type="number"],
+.profile-form input[type="email"],
 .profile-form select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-
-.profile-form {
-    max-width: 500px;
-    background-color: var(--color-border-default);
-    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
     box-sizing: border-box;
+    background-color: #fff;
+    color: #111; /* Dark text color for inputs */
 }
 
-/* Style the form title */
-.form-title {
-    /* Specific class for the h2 */
-    text-align: center;
-    color: var(--color-text-default);
-    /* Use default text color */
-    margin-bottom: var(--spacing-lg);
-    font-size: var(--font-size-xl);
-    font-weight: 600;
+.profile-form select {
+    color: #111;
 }
 
-/* Style each group of form element (label + input/select) */
-.form-group {
-    margin-bottom: var(--spacing-md);
+.profile-form select option {
+    background: #fff;
+    color: #111;
 }
 
-/* Style labels */
-.form-group label {
-    /* Target labels within form groups */
-    display: block;
-    margin-bottom: var(--spacing-xs);
-    font-weight: 600;
-    color: var(--color-text-default);
-    /* Use default text color */
-    font-size: var(--font-size-md);
+.profile-form input:focus,
+.profile-form select:focus {
+    outline: none;
+    border-color: var(--color-brand-primary, #007bff);
+    box-shadow: 0 0 0 3px rgba(var(--color-brand-primary-rgb, 0, 123, 255), 0.2);
 }
 
-/* Style text, number inputs, and select elements */
-/* These styles are largely inherited from base.css .form-group input/select */
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group select {
-    /* Inherits padding, border, border-radius, background, color, font-size, transition from base.css */
-    width: 100%;
-    /* Ensure they take full width of their container */
-    box-sizing: border-box;
-}
-
-/* Specific styling for the height and weight input/select group layout */
+/* --- Styling for Input with Units --- */
 .form-group.unit-group .input-with-unit {
-    /* Target the new wrapper div */
-    /* display: flex; */
-    gap: var(--spacing-xs);
-    /* Space between input and select */
-    /* align-items: center; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem; /* row-gap column-gap */
+    align-items: center;
+    color: #111; /* **** ADDED THIS LINE **** Ensures direct text nodes are dark */
 }
 
 .form-group.unit-group .input-with-unit input[type="number"] {
-    flex-grow: 1;
-    /* Allow the number input to take available space */
-    width: auto;
-    /* Override default 100% width */
+    flex: 1 1 auto;
+    min-width: 100px;
 }
 
 .form-group.unit-group .input-with-unit select {
     width: auto;
-    /* Allow unit select to shrink */
     flex-shrink: 0;
-    /* Prevent unit select from shrinking too much */
+    padding: 0.75rem 0.5rem;
 }
 
-/* Style for the gender select dropdown - ensure full width */
-#gender {
+/* --- Styling for Radio Buttons & Checkboxes --- */
+.profile-form input[type="radio"],
+.profile-form input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+    accent-color: var(--color-brand-primary, #007bff);
+    cursor: pointer;
+    flex-shrink: 0; /* Prevent radio/checkbox from shrinking */
+}
+
+
+/* Ensure the main label for these groups is styled correctly */
+#activityGroup > label,
+#macros > label,
+.form-group.unit-group[id*="diet"] > label { /* Selecting the main label */
+     color: #222;
+     font-weight: 500;
+     margin-bottom: 0.5rem;
+}
+
+
+/* Custom ratio text inputs */
+#macros .input-with-unit div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
     width: 100%;
 }
+/* Targeting the label around the custom ratio text inputs IF using label structure */
+/* #macros .input-with-unit div label {
+    margin-right: 0;
+    color: #111;
+    font-weight: normal;
+   }
+*/
 
-/* Style focus state for better usability */
-/* Inherited from base.css .form-group input/select:focus */
-/* .form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-brand-primary);
-    box-shadow: 0 0 0 2px rgba(var(--color-brand-primary), 0.25);
-} */
+#macros input[type="text"] {
+    width: 50px;
+    text-align: center;
+    padding: 0.25rem;
+    color: #111;
+}
 
+/* --- Helper Text --- */
+.profile-form small {
+    display: block;
+    margin-top: 0.25rem;
+    color: #555;
+    font-size: 0.875rem;
+}
 
-/* Style the submit button */
-/* Button styles are applied via the 'btn btn-primary' classes in HTML and inherited from base.css */
-/* button[type="submit"] {
+/* --- Modern Button Styling --- */
+button[type="submit"].btn-primary {
     display: block;
     width: 100%;
-    background-color: var(--color-brand-primary);
-    color: var(--color-text-on-primary);
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: 0.85rem;
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: 4px;
     cursor: pointer;
-    font-size: var(--font-size-md);
+    font-size: 1rem;
     font-weight: 600;
-    transition: var(--transition);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--color-brand-primary, #007bff);
+    color: var(--color-text-on-primary, #fff);
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-button[type="submit"]:hover {
-    background-color: var(--color-brand-secondary);
-    color: var(--color-text-on-dark);
-    box-shadow: var(--box-shadow);
+button[type="submit"].btn-primary:hover {
+    background-color: var(--color-brand-secondary, #0056b3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-button[type="submit"]:active {
-     background-color: color-mix(in srgb, var(--color-brand-secondary) 90%, black);
-     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-} */
-
-/* Ensure placeholder text color is readable */
+/* --- Placeholder Text Styling --- */
 ::placeholder {
-    color: var(--color-text-light);
-    opacity: 1;
+  color: #888;
+  opacity: 1;
 }
+:-ms-input-placeholder { color: #888; }
+::-ms-input-placeholder { color: #888; }

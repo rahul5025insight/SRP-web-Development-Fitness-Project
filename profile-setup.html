@@ -10,7 +10,10 @@
 </head>
 
 <body>
-    <form action="dashboard.html" method="post" id="profileForm" class="profile-form card"> <h2 class="form-title">Enter Details to Get Recommendations</h2> <div class="form-group">
+    <!-- action="dashboard.html" method="post" -->
+    <form id="profileForm" class="profile-form card">
+        <h2 class="form-title">Enter Details to Get Recommendations</h2>
+        <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
         </div>
@@ -30,20 +33,6 @@
                 <option value="prefer-not-say">Prefer not to say</option>
             </select>
         </div>
-
-        <!-- In profile-setup.html, inside the <form> -->
-        <div class="form-group unit-group">
-            <label for="weight">Weight:</label>
-            <div class="input-with-unit">
-                <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
-                <select id="weight_unit" name="weight_unit" required>
-                    <option value="kg">kg</option>
-                    <option value="lbs">lbs</option>
-                </select>
-            </div>
-        </div>
-
-
         <div class="form-group unit-group">
             <label for="height">Height:</label>
             <div class="input-with-unit"> <input type="number" id="height" name="height" step="0.1" min="1" required
@@ -55,11 +44,10 @@
                 </select>
             </div>
         </div>
-
-        <!-- In profile-setup.html, inside the <form> -->
         <div class="form-group unit-group">
             <label for="weight">Weight:</label>
-            <div class="input-with-unit"> <input type="number" id="weight" name="weight" step="0.1" min="1" required placeholder="e.g., 70">
+            <div class="input-with-unit"> <input type="number" id="weight" name="weight" step="0.1" min="1" required
+                    placeholder="e.g., 70">
                 <select id="weight_unit" name="weight_unit">
                     <option value="kg">kg</option>
                     <option value="lbs">lbs</option>
@@ -77,7 +65,6 @@
                 <input type="radio" name="activity" value="4" /> 7<br />
             </div>
         </div>
-        <!-- <span1>Activity level</span1> -->
 
         <div class="form-group unit-group">
             <label for="macros">Macro ratios:</label>
@@ -92,9 +79,8 @@
                 </div>
             </div>
         </div>
-        <!-- <span1>Macro ratios</span1> -->
 
-        
+
         <div class="form-group unit-group">
             <label for="dieting-type">Dieting type:</label>
             <div class="input-with-unit">
@@ -104,23 +90,57 @@
             </div>
         </div>
 
-        <!-- <span>Dieting type</span> -->
+        <select id="dietaryPrefs" name="dietaryPrefs" required>
+            <option value="">Select one…</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="pescatarian">Pescatarian</option>
+            <option value="omnivore">Omnivore</option>
+            <option value="keto">Keto</option>
+        </select>
 
-        <!-- <span>Dieting type</span> -->
+        <label for="fitnessLevel">Fitness Level:</label>
+        <select id="fitnessLevel" name="fitnessLevel" required>
+            <option value="">Choose one…</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
 
-        <div class="form-group unit-group">
-            <label for="dieting-type">Deficit/surplus:</label>
-            <div class="input-with-unit">
-                <input type="radio" name="diettype" value="0" checked /> Lose
-                <input type="radio" name="diettype" value="1" /> Maintain
-                <input type="radio" name="diettype" value="2" /> Gain <br />
-            </div>
+        <div class="form-group">
+            <label for="preferences">Workout Preferences:</label>
+            <select id="preferences" name="preferences" multiple required>
+                <option value="strength">Strength</option>
+                <option value="cardio">Cardio</option>
+                <option value="flexibility">Flexibility</option>
+                <option value="balance">Balance</option>
+            </select>
+            <small>Select one or more</small>
         </div>
+        <label for="dietaryPrefs">Dietary Preference:</label>
+
+
+        <div class="form-group">
+            <label for="goals">Fitness Goals:</label>
+            <input type="text" id="goals" name="goals" placeholder="e.g., build muscle, lose fat" required>
+        </div>
+
+        <label for="targetCalories">Daily Calorie Target:</label>
+        <input type="number" id="targetCalories" name="targetCalories" min="800" max="4000" required />
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Get Recommendations</button>
         </div>
 
+
     </form>
+
+    <!-- <script>
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Stop the page from jumping instantly
+            window.location.href = 'diet.html'; // Redirect manually
+        });
+    </script> -->
     <script src="js/nutrition.js"></script>
     <script src="js/profile-setup.js"></script>
 

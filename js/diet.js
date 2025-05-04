@@ -1,214 +1,88 @@
-// DOM Elements for Macro Summary (Keep)
+// ========== DOM ELEMENTS ==========
 const dailyCaloriesElement = document.getElementById('dailyCalories');
 const proteinTargetElement = document.getElementById('proteinTarget');
 const carbsTargetElement = document.getElementById('carbsTarget');
 const fatsTargetElement = document.getElementById('fatsTarget');
 
-// DOM Elements for User Profile Display (New)
 const profileNameElement = document.getElementById('profileName');
 const profileAgeElement = document.getElementById('profileAge');
 const profileGenderElement = document.getElementById('profileGender');
 const profileHeightElement = document.getElementById('profileHeight');
 const profileWeightElement = document.getElementById('profileWeight');
 
-// DOM Elements for Meal Logging Modal and Food Log (Keep)
-const logMealModal = document.getElementById('logMealModal');
-const logMealForm = document.getElementById('logMealForm');
+const logMealModal = document.getElementById('mealModal');
+const logMealForm = document.getElementById('mealForm');
 const foodLogBody = document.getElementById('foodLogBody');
 const totalCaloriesElement = document.getElementById('totalCalories');
 const totalProteinElement = document.getElementById('totalProtein');
 const totalCarbsElement = document.getElementById('totalCarbs');
 const totalFatsElement = document.getElementById('totalFats');
-const logoutBtn = document.getElementById('logoutBtn'); // Keep if you have logout functionality
 
+const logoutBtn = document.getElementById('logoutBtn');
+const logBtn = document.getElementById('logFoodBtn');
+const modal = document.getElementById('foodModal');
+const closeBtn = modal.querySelector('.close');
+const form = document.getElementById('foodForm');
+const recContainer = document.getElementById('recommendations');
 
-function calculateAndDisplayMacros(profile) {
-    // 1. Convert weight to kg
-    let weightKg = parseFloat(profile.weight);
-    if (profile.weightUnit === 'lbs') weightKg *= 0.453592;
+// ========== CONSTANTS ==========
+const API_KEY = 'ca20f28351d64a57b8722357d72e1d8c';
+const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
 
-    // 2. Convert height to cm
-    let heightCm = parseFloat(profile.height);
-    if (profile.heightUnit === 'inches') heightCm *= 2.54;
-    else if (profile.heightUnit === 'feet') heightCm *= 30.48;
-
-    const age = parseInt(profile.age, 10);
-    const s = profile.gender.toLowerCase() === 'male' ? 5 : -161;
-
-    // 3. BMR & maintenance
-    const BMR = 10 * weightKg + 6.25 * heightCm - 5 * age + s;
-    const activityMap = { '0': 1.4, '1': 1.6, '2': 1.7, '3': 1.8, '4': 2 };
-    const actFactor = activityMap[profile.activity] || 1.5;
-    const maintenance = BMR * actFactor;
-
-    // 4. Macro ratios (start balanced 40/30/30)
-    const carbRatio = 0.4, protRatio = 0.3, fatRatio = 0.3;
-    const cal = Math.round(maintenance);
-    const carbsG = Math.round(carbRatio * cal / 4);
-    const protG = Math.round(protRatio * cal / 4);
-    const fatG = Math.round(fatRatio * cal / 9);
-
-    // 5. Update the DOM
-    dailyCaloriesElement.textContent = `${cal} kcal`;
-    carbsTargetElement.textContent = `${carbsG} g`;
-    proteinTargetElement.textContent = `${protG} g`;
-    fatsTargetElement.textContent = `${fatG} g`;
+// ========== FOOD LOG ==========
+function loadFoodLog() {
+    return JSON.parse(localStorage.getItem('foodLog') || '[]');
 }
 
-// --- Function to Load and Display Profile Data from localStorage ---
-function loadAndDisplayProfile() {
-    console.log("Attempting to load profile data from localStorage...");
-    const profileDataString = localStorage.getItem('userProfile');
+function saveFoodLog(log) {
+    localStorage.setItem('foodLog', JSON.stringify(log));
+}
 
-    console.log('Data retrieved from localStorage:', profileDataString);
+function renderFoodLog() {
+    const log = loadFoodLog();
+    foodLogBody.innerHTML = '';
+    log.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+      <td>${new Date(item.date).toLocaleDateString()}</td>
+      <td>${item.foodName}</td>
+      <td>${item.servingSize}</td>
+      <td>${item.foodCalories}</td>
+      <td><button class="delete" data-id="${item.id}">×</button></td>
+    `;
+        foodLogBody.appendChild(tr);
+    });
+}
 
-    if (profileDataString) {
-        try {
-            const profileData = JSON.parse(profileDataString);
-            console.log('Successfully parsed profile data:', profileData);
-
-            // Update the profile summary elements
-            // Check if the element exists AND the data exists before updating
-            if (profileNameElement && profileData.name) {
-                profileNameElement.textContent = profileData.name;
-                console.log("Updated profileNameElement with:", profileData.name);
-            } else {
-                console.warn("Profile name element not found or data missing.");
-            }
-
-            if (profileAgeElement && profileData.age) {
-                profileAgeElement.textContent = profileData.age;
-                console.log("Updated profileAgeElement with:", profileData.age);
-            } else {
-                console.warn("Profile age element not found or data missing.");
-            }
-
-            if (profileGenderElement && profileData.gender) {
-                // Capitalize the first letter for display
-                const displayGender = profileData.gender.charAt(0).toUpperCase() + profileData.gender.slice(1);
-                profileGenderElement.textContent = displayGender;
-                console.log("Updated profileGenderElement with:", displayGender);
-            } else {
-                console.warn("Profile gender element not found or data missing.");
-            }
-
-            if (profileHeightElement && profileData.height && profileData.heightUnit) {
-                profileHeightElement.textContent = `${profileData.height} ${profileData.heightUnit}`;
-                console.log("Updated profileHeightElement with:", `${profileData.height} ${profileData.heightUnit}`);
-            } else {
-                console.warn("Profile height element not found or data missing.");
-            }
-
-            if (profileWeightElement && profileData.weight && profileData.weightUnit) {
-                profileWeightElement.textContent = `${profileData.weight} ${profileData.weightUnit}`;
-                console.log("Updated profileWeightElement with:", `${profileData.weight} ${profileData.weightUnit}`);
-            } else {
-                console.warn("Profile weight element not found or data missing.");
-            }
-        } catch (error) {
-            console.error('Error parsing profile data from localStorage:', error);
-            // Handle potential errors with localStorage data
-        }
-    } else {
-        console.log('No profile data found in localStorage. User may need to complete profile setup.');
-        // Optionally redirect to profile setup page
-        window.location.href = 'profile-setup.html';
+foodLogBody.addEventListener('click', e => {
+    if (e.target.matches('.delete')) {
+        const id = e.target.dataset.id;
+        const updatedLog = loadFoodLog().filter(i => i.id !== id);
+        saveFoodLog(updatedLog);
+        renderFoodLog();
     }
-}
+});
+logBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+});
 
-// --- Existing Functions (Keep if needed for other features) ---
+// And closing:
+modal.addEventListener('click', e => {
+    // click on backdrop (outside content) hides it
+    if (e.target === modal) {
+        modal.classList.add('hidden');
+    }
+});
 
-// Initialize Diet Page (Modified to call loadAndDisplayProfile)
-async function initDietPage() {
-    console.log("Initializing Diet Page...");
-    // Load and display profile data from localStorage first
-    loadAndDisplayProfile();
-
-    // You can keep your Supabase authentication and data fetching logic here
-    // if you are using it for other features like fetching meal plans or food logs.
-    // Example:
-    // if (supabase) { // Check if Supabase client was initialized
-    //     try {
-    //         const { data: { user } } = await supabase.auth.getUser();
-    //         if (!user) {
-    //             window.location.href = 'index.html'; // Redirect if not authenticated
-    //             return;
-    //         }
-    //         // Fetch user profile from Supabase (if you have one)
-    //         const { data: profile, error: profileError } = await supabase
-    //             .from('profiles')
-    //             .select('*')
-    //             .eq('user_id', user.id)
-    //             .single();
-    //         if (profileError) throw profileError;
-    //         console.log("Fetched Supabase profile:", profile);
-    //         // Use Supabase profile data for calculations/display if preferred
-    //         // updateMacroTargets(profile);
-    //         // generateMealPlan(profile);
-    //         // loadFoodLog(user.id);
-    //     } catch (error) {
-    //         console.error('Error initializing diet page (Supabase):', error);
-    //         // alert('Error loading diet plan. Please try again.');
-    //     }
-    // } else {
-    //     console.warn('Supabase client not configured or initialized. Skipping Supabase operations.');
-    // }
-
-
-    // If you are not using Supabase for profile/macro calculation,
-    // you might need to implement logic here to calculate macros based on localStorage data.
-    // For this example, the macro targets will remain '-- kcal' unless calculated.
-}
-
-// Calculate and Update Macro Targets (Keep if you have calculation logic)
-// function updateMacroTargets(profile) { ... }
-
-// Generate Meal Plan (Keep if you have meal plan generation logic)
-// function generateMealPlan(profile) { ... }
-
-// Load Food Log (Keep if you are using Supabase for food logging)
-// async function loadFoodLog(userId) { ... }
-
-// Update Food Log Table (Keep if you are using Supabase for food logging)
-// function updateFoodLogTable(foodLog) { ... }
-
-// Calculate Totals (Keep if you are using Supabase for food logging)
-// function calculateTotals(foodLog) { ... }
-
-// Log Meal (Keep if you are using Supabase for food logging)
-// async function logMeal(mealData) { ... }
-
-// Delete Food Entry (Keep if you are using Supabase for food logging)
-// async function deleteFoodEntry(entryId) { ... }
-
-// Event Listeners (Keep if needed for modal, logging, logout)
-// Ensure elements exist before adding listeners
-
-
-document.addEventListener('DOMContentLoaded', initDietPage);
-// -----------------------------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------------------------
-async function initDietPage() {
-    loadAndDisplayProfile();
-    const profile = JSON.parse(localStorage.getItem('userProfile'));
-    if (profile) calculateAndDisplayMacros(profile);
-
-    // …then your existing Supabase or logging logic
-}
-
-// ↓↓↓ START: Meal‑Log Functionality ↓↓↓
-document.addEventListener('DOMContentLoaded', () => {
+closeBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+});
+// ========== MODAL ==========
+function setupMealModal() {
     const logButtons = document.querySelectorAll('.log-meal-btn');
     const modal = document.getElementById('mealModal');
-    const closeBtn = document.getElementById('closeModal');
-    const mealForm = document.getElementById('mealForm');
-    const logList = document.getElementById('logList');
-    const totalCalEl = document.getElementById('totalCalories');
+    const closeBtn = modal?.querySelector('#closeModal');
 
-    
-    let meals = [];
-
-    // 1. Open modal
     logButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             document.getElementById('mealType').value = btn.dataset.meal;
@@ -216,34 +90,113 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Assuming logMealForm and close button exist within the modal
-    const closeButton = logMealModal.querySelector('.close'); // Use querySelector for robustness
-    if (closeButton) {
-         closeButton.addEventListener('click', () => {
-             logMealModal.style.display = 'none';
-         });
-    }
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        if (e.target === logMealModal) {
-            logMealModal.style.display = 'none';
+    window.addEventListener('click', e => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
         }
     });
-});
 
-// 2. Close modal
-closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-window.addEventListener('click', e => {
-    if (e.target === modal) modal.classList.add('hidden');
-});
+    if (closeBtn) {
+        closeBtn.onclick = () => modal.classList.add('hidden');
+    }
+}
 
-// logMealForm.addEventListener('submit', async (e) => { ... }); // Keep if logging
+// ========== MACRO CALCULATIONS ==========
+function calculateAndDisplayMacros(profile) {
+    let weightKg = parseFloat(profile.weight);
+    if (profile.weightUnit === 'lbs') weightKg *= 0.453592;
 
-// if (logoutBtn) { // Check if logout button exists
-//     logoutBtn.addEventListener('click', async () => { ... }); // Keep if logout
-// }
+    let heightCm = parseFloat(profile.height);
+    if (profile.heightUnit === 'inches') heightCm *= 2.54;
+    else if (profile.heightUnit === 'feet') heightCm *= 30.48;
 
+    const age = parseInt(profile.age, 10);
+    const s = profile.gender.toLowerCase() === 'male' ? 5 : -161;
 
-// Initialize diet page when loaded
-document.addEventListener('DOMContentLoaded', initDietPage); 
+    const BMR = 10 * weightKg + 6.25 * heightCm - 5 * age + s;
+    const actFactor = { '0': 1.4, '1': 1.6, '2': 1.7, '3': 1.8, '4': 2 }[profile.activity] || 1.5;
+    const maintenance = BMR * actFactor;
+
+    const carbRatio = 0.4, protRatio = 0.3, fatRatio = 0.3;
+    const cal = Math.round(maintenance);
+    const carbsG = Math.round(carbRatio * cal / 4);
+    const protG = Math.round(protRatio * cal / 4);
+    const fatG = Math.round(fatRatio * cal / 9);
+
+    dailyCaloriesElement.textContent = `${cal} kcal`;
+    carbsTargetElement.textContent = `${carbsG} g`;
+    proteinTargetElement.textContent = `${protG} g`;
+    fatsTargetElement.textContent = `${fatG} g`;
+}
+
+// ========== PROFILE DISPLAY ==========
+function loadAndDisplayProfile() {
+    const profileDataString = localStorage.getItem('userProfile');
+    if (!profileDataString) {
+        window.location.href = 'profile-setup.html';
+        return;
+    }
+
+    try {
+        const profile = JSON.parse(profileDataString);
+
+        if (profileNameElement) profileNameElement.textContent = profile.name || '-';
+        if (profileAgeElement) profileAgeElement.textContent = profile.age || '-';
+        if (profileGenderElement) profileGenderElement.textContent = profile.gender.charAt(0).toUpperCase() + profile.gender.slice(1);
+        if (profileHeightElement) profileHeightElement.textContent = `${profile.height} ${profile.heightUnit}`;
+        if (profileWeightElement) profileWeightElement.textContent = `${profile.weight} ${profile.weightUnit}`;
+    } catch (err) {
+        console.error('Error parsing profile data:', err);
+    }
+}
+
+// ========== FOOD RECOMMENDATIONS ==========
+async function fetchFoodRecommendations() {
+    const count = 12;
+    const { dietaryPrefs } = userProfile;
+    const url = new URL('https://api.spoonacular.com/recipes/random');
+    url.searchParams.set('number', count);
+    if (dietaryPrefs) {
+        url.searchParams.set('tags', dietaryPrefs);
+    }
+    // put your API key in the query string or header
+    url.searchParams.set('apiKey', API_KEY);
+
+    // url.searchParams.set('timeFrame', 'day');
+    // url.searchParams.set('targetCalories', targetCalories);
+    // url.searchParams.set('diet', dietaryPrefs);
+
+    recContainer.innerHTML = '<p>Loading…</p>';
+    try {
+        const res = await fetch(url.toString()); if (res.status === 401) {
+            throw new Error('Invalid or missing API key (401 Unauthorized)');
+        }
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        // data.recipes is an array of length == count
+
+        recContainer.innerHTML = data.recipes.map(r => `
+            <div class="meal-card">
+              <h4>${r.title}</h4>
+              <img src="${r.image}" alt="${r.title}" class="recipe-thumb" />
+              <p>Ready in ${r.readyInMinutes} min • Serves ${r.servings}</p>
+              <a href="${r.sourceUrl}" target="_blank">View Recipe</a>
+            </div>
+          `).join('');
+    } catch (err) {
+        console.error('Rec API error:', err);
+        recContainer.innerText = 'Unable to load recommendations.';
+    }
+}
+// ========== INIT ==========
+function initDietPage() {
+    loadAndDisplayProfile();
+    if (userProfile) calculateAndDisplayMacros(userProfile);
+    renderFoodLog();
+    fetchFoodRecommendations();
+    setupMealModal();
+}
+
+document.addEventListener('DOMContentLoaded', initDietPage);

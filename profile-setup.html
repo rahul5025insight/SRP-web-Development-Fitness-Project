@@ -58,24 +58,24 @@
         <div class="form-group unit-group" id="activityGroup">
             <label>Activity level (sessions/week):</label>
             <div class="input-with-unit">
-                <input type="radio" name="activity" value="0" /> 1<br />
-                <input type="radio" name="activity" value="1" checked /> 2<br />
-                <input type="radio" name="activity" value="2" /> 4<br />
-                <input type="radio" name="activity" value="3" /> 6<br />
-                <input type="radio" name="activity" value="4" /> 7<br />
+                <label><input type="radio" name="activity" value="0" /> 1<br /></label>
+                <label><input type="radio" name="activity" value="1" checked /> 2<br /></label>
+                <label><input type="radio" name="activity" value="2" /> 4<br /></label>
+                <label><input type="radio" name="activity" value="3" /> 6<br /></label>
+                <label><input type="radio" name="activity" value="4" /> 7<br /></label>
             </div>
         </div>
 
         <div class="form-group unit-group">
             <label for="macros">Macro ratios:</label>
             <div class="input-with-unit">
-                <input type="radio" name="ratios" value="0" checked onclick="set_ratio(40,30,30);" /> Balanced<br />
-                <input type="radio" name="ratios" value="1" onclick="set_ratio(20,40,40);" /> Low Carb<br />
-                <input type="radio" name="ratios" value="2" onclick="set_ratio(50,30,20);" /> High Carb<br />
+                <label><input type="radio" name="ratios" value="0" checked onclick="set_ratio(40,30,30);" /> Balanced<br /></label>
+                <label></label><input type="radio" name="ratios" value="1" onclick="set_ratio(20,40,40);" /> Low Carb<br /></label>
+                <label></label><input type="radio" name="ratios" value="2" onclick="set_ratio(50,30,20);" /> High Carb<br /></label>
                 <div>
-                    <input type="text" size="2" maxlength="2" id="carbratio" /> % Carbs <br />
-                    <input type="text" size="2" maxlength="2" id="proteinratio" /> % Proteins <br />
-                    <input type="text" size="2" maxlength="2" id="fatratio" /> % Fats <br />
+                    <label></label><input type="text" size="2" maxlength="2" id="carbratio" /> % Carbs <br /></label>
+                    <label></label><input type="text" size="2" maxlength="2" id="proteinratio" /> % Proteins <br /></label>
+                    <label></label><input type="text" size="2" maxlength="2" id="fatratio" /> % Fats <br /></label>
                 </div>
             </div>
         </div>
@@ -84,9 +84,9 @@
         <div class="form-group unit-group">
             <label for="dieting-type">Dieting type:</label>
             <div class="input-with-unit">
-                <input type="radio" name="diettype" value="0" checked /> Lose
-                <input type="radio" name="diettype" value="1" /> Maintain
-                <input type="radio" name="diettype" value="2" /> Gain <br />
+                <label></label><input type="radio" name="diettype" value="0" checked /> Lose<br/></label>
+                <label></label><input type="radio" name="diettype" value="1" /> Maintain<br/></label>
+                <label></label><input type="radio" name="diettype" value="2" /> Gain <br /></label>
             </div>
         </div>
 

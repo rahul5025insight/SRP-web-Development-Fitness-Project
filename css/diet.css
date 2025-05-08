@@ -1,16 +1,11 @@
 /* Diet Specific Styles */
-@import url('base.css'); /* Import base styles */
-
-/* --- General Layout Adjustments --- */
-/* Ensure main content has appropriate padding */
+@import url('base.css');
 main {
     padding: var(--spacing-md) 0; /* Add some vertical padding to main content */
 }
 
 /* --- Profile Summary Section --- */
 .user-profile-summary {
-    /* Inherits base card styles via the 'card' class in HTML:
-       background-color, padding, border-radius, box-shadow, color */
     margin-bottom: var(--spacing-lg); /* Add space below the profile summary */
     text-align: left; /* Align text left within the card */
     max-width: 700px; /* Increased max-width for better readability */
@@ -60,8 +55,6 @@ main {
 }
 
 .macro-card {
-    /* Inherits base card styles via the 'card' class in HTML */
-    /* background-color, padding, border-radius, text-align, transition */
     color: var(--color-text-on-dark); /* White text on dark card */
     transition: var(--transition); /* Use transition variable */
 }
@@ -158,8 +151,6 @@ main {
 }
 
 .meal-card {
-    /* Inherits base card styles via the 'card' class in HTML */
-    /* background-color, border-radius, padding, transition */
     color: var(--color-text-on-dark); /* White text on dark card */
     transition: var(--transition); /* Use transition variable */
 }
@@ -307,7 +298,12 @@ nav .logo img {
     /* Inherits base button styles */
 }
 
-
+#diet-summary{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+}
 /* --- Meal Logging Modal --- */
 /* Modal styles are largely inherited from base.css */
 #logMealModal .modal-content {
